@@ -1,0 +1,61 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/glutracker_narrow_padding">
+
+        <ImageView
+            android:id="@+id/login_logo"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@null"
+            android:src="@drawable/smartglu" />
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_logo"
+            android:gravity="center"
+            android:padding="@dimen/glutracker_narrow_padding"
+            android:text="@string/app_name"
+            android:textSize="@dimen/abc_text_size_display_1_material"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/app_name"
+            android:orientation="vertical"
+            android:padding="@dimen/glutracker_medium_padding">
+
+            <EditText
+                android:id="@+id/FLS_EditText_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="email" />
+
+            <EditText
+                android:id="@+id/FLS_EditText_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="password"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/FLS_Button_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="LOGIN" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

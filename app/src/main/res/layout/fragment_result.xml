@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/glutracker_medium_padding">
+
+    <TextView
+        android:id="@+id/FR_TextView_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="14:53"
+        android:textColor="@color/material_deep_teal_500"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/FR_TextView_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Wednesday, 25 February 2015"
+        android:textColor="@color/material_deep_teal_500"
+        android:textSize="@dimen/abc_text_size_subtitle_material_toolbar" />
+
+
+    <TextView
+        android:id="@+id/FR_TextView_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:gravity="center"
+        android:text="120\nmg/dL"
+        android:textColor="@color/material_deep_teal_500"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/FR_Button_saveResult"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:background="@color/material_deep_teal_500"
+        android:text="SAVE RESULT"
+        android:textColor="@color/primary_text_default_material_dark" />
+
+</LinearLayout>

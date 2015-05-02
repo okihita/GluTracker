@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/glutracker_medium_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textColor="@color/material_deep_teal_500"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Great! Your blood sugar is normal for the past 3 weeks. You have reported your result to dr. Hasiholan 4 days ago. You need no insulin injection for the next 6 days."/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="32dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Measure"
+        android:textColor="@color/material_deep_teal_500"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Click on the button below to measure."/>
+
+    <Button
+        android:id="@+id/FHT_Button_continue"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/material_deep_teal_500"
+        android:text="Measure"
+        android:textColor="@color/primary_text_default_material_dark"/>
+</LinearLayout>

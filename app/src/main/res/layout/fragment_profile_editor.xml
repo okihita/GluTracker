@@ -1,0 +1,136 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/glutracker_medium_padding">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/networkImageView"
+        android:layout_width="150dp"
+        android:src="@drawable/ursula"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true" />
+
+    <TableLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <TextView
+                android:layout_column="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                style="?android:textAppearanceMedium"
+                android:text="Name"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/profile_TextView_name"
+                android:layout_width="wrap_content"
+                style="?android:textAppearanceMedium"
+                android:layout_column="2"
+                />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_column="1"
+                android:paddingLeft="4dp"
+                style="?android:textAppearanceMedium"
+                android:paddingRight="4dp"
+                android:text="Birthdate"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/profile_TextView_birthdate"
+                android:layout_width="wrap_content"
+                style="?android:textAppearanceMedium"
+                android:layout_column="2"
+                />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_column="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                style="?android:textAppearanceMedium"
+                android:text="Gender"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/profile_TextView_gender"
+                android:layout_width="wrap_content"
+                style="?android:textAppearanceMedium"
+                android:layout_column="2"
+                 />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_column="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_column="1"
+                android:paddingLeft="4dp"
+                style="?android:textAppearanceMedium"
+                android:paddingRight="4dp"
+                android:text="Email"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/profile_TextView_email"
+                android:layout_width="wrap_content"
+                style="?android:textAppearanceMedium"
+                android:layout_column="2"
+                android:text=": ???" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_column="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                style="?android:textAppearanceMedium"
+                android:text="Password"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                style="?android:textAppearanceMedium"
+                android:text=": ******************" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                style="?android:textAppearanceMedium"
+                android:textColor="@color/material_blue_grey_800" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/ProfEdFrag_Button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SAVE" />
+
+</LinearLayout>

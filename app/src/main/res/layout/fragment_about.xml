@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="@dimen/glutracker_medium_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tentang"
+        android:textColor="@color/material_deep_teal_500"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/lorem"/>
+
+    <Button
+        android:id="@+id/FHT_Button_continue"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@color/material_deep_teal_500"
+        android:text="Kunjungi Situs Kami"
+        android:textColor="@color/primary_text_default_material_dark"/>
+</LinearLayout>
