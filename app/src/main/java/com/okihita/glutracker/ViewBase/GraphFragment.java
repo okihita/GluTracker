@@ -37,7 +37,7 @@ public class GraphFragment extends Fragment {
     private BarChart mChartRandom;
     private ArrayList<MeasurementItem> mMeasurementItems = new ArrayList<>();
 
-    private SimpleDateFormat sdf = (new SimpleDateFormat("dd MMMM", new Locale("id", "ID")));
+    private SimpleDateFormat sdf = (new SimpleDateFormat("dd MMM", new Locale("id", "ID")));
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

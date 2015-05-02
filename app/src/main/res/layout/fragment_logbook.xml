@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/logbookFragment_Button_add"
+            android:id="@+id/logbook_Button_add"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
@@ -19,7 +19,7 @@
             />
 
         <Button
-            android:id="@+id/logbookFragment_Button_send"
+            android:id="@+id/logbook_Button_send"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/logbookFragment_Button_viewGraph"
+        android:id="@+id/logbook_Button_viewGraph"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:text="View Graph"
@@ -42,7 +42,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/FLog_Button_premeal"
+            android:id="@+id/logbook_Button_premeal"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
@@ -50,7 +50,7 @@
             />
 
         <Button
-            android:id="@+id/FLog_Button_postmeal"
+            android:id="@+id/logbook_Button_postmeal"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
@@ -58,7 +58,7 @@
             />
 
         <Button
-            android:id="@+id/FLog_Button_random"
+            android:id="@+id/logbook_Button_random"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
@@ -68,7 +68,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/logbookFragment_ListView_list"
+        android:id="@+id/logbook_ListView_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

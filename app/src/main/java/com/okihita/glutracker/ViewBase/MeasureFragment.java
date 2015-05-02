@@ -54,9 +54,6 @@ public class MeasureFragment extends Fragment {
 
     /* Menentukan kapan merah-hijau-kuning. */
     private int mJenisPengukuran;
-    private int mAgeRange;
-    private boolean mIsDiabetes;
-    private boolean mIsPregnant;
     private int mKadar;
     private Date mTanggalWaktu = new Date();
 
@@ -83,9 +80,7 @@ public class MeasureFragment extends Fragment {
         /* Change username in greeting text. */
         String username = PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .getString(Config.LOGGED_IN_USER_NAME, "User");
-
         mGreetingTextView.setText("Hi, " + getFirstWord(username));
-
 
         /* Progress wheel styling. */
         mProgressPieView.setProgress(0);

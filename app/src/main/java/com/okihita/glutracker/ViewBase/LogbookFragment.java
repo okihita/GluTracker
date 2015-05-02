@@ -50,29 +50,29 @@ public class LogbookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_logbook, container, false);
 
-        Button addButton = (Button) view.findViewById(R.id.logbookFragment_Button_add);
-        Button sendButton = (Button) view.findViewById(R.id.logbookFragment_Button_send);
-        Button viewGraphButton = (Button) view.findViewById(R.id.logbookFragment_Button_viewGraph);
-        mMeasurementListView = (ListView) view.findViewById(R.id.logbookFragment_ListView_list);
+        Button addButton = (Button) view.findViewById(R.id.logbook_Button_add);
+        Button sendButton = (Button) view.findViewById(R.id.logbook_Button_send);
+        Button viewGraphButton = (Button) view.findViewById(R.id.logbook_Button_viewGraph);
+        mMeasurementListView = (ListView) view.findViewById(R.id.logbook_ListView_list);
 
         mItemAdapter = new ItemAdapter(this, mMeasurementItems);
         mMeasurementListView.setAdapter(mItemAdapter);
 
-        view.findViewById(R.id.FLog_Button_premeal).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.logbook_Button_premeal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 repopulateList(Config.MEASUREMENT_MODE_PREMEAL);
             }
         });
 
-        view.findViewById(R.id.FLog_Button_postmeal).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.logbook_Button_postmeal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 repopulateList(Config.MEASUREMENT_MODE_POSTMEAL);
             }
         });
 
-        view.findViewById(R.id.FLog_Button_random).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.logbook_Button_random).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 repopulateList(Config.MEASUREMENT_MODE_RANDOM);
