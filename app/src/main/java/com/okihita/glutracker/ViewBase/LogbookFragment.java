@@ -228,4 +228,10 @@ public class LogbookFragment extends Fragment {
         mMeasurementListView.setAdapter(mItemAdapter);
         mItemAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Logbook");
+    }
 }

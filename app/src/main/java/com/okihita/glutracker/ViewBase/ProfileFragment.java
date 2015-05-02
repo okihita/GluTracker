@@ -6,11 +6,11 @@ import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -44,7 +44,6 @@ public class ProfileFragment extends Fragment {
     private TextView mHistoryField;
     private TextView mPasswordField;
 
-    private Button mEditButton;
     private int mLoggedInUserId;
 
     @Override
@@ -71,8 +70,7 @@ public class ProfileFragment extends Fragment {
         mHistoryField = (TextView) view.findViewById(R.id.profile_TextView_history);
         mPasswordField = (TextView) view.findViewById(R.id.profile_TextView_password);
 
-        mEditButton = (Button) view.findViewById(R.id.ProfFrag_Button_edit);
-        mEditButton.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.ProfFrag_Button_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fm = getFragmentManager();
@@ -175,5 +173,11 @@ public class ProfileFragment extends Fragment {
                 .getDefaultSharedPreferences(getActivity().getApplicationContext())
                 .edit().putBoolean(Config.IS_DIABETES, isUserDiabetes)
                 .commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Profile");
     }
 }

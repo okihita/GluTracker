@@ -3,6 +3,7 @@ package com.okihita.glutracker.ViewBase;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,5 +126,12 @@ public class ProfileEditorFragment extends Fragment {
                 });
 
         mRequestQueue.add(measurementRequest);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Edit Profile");
     }
 }

@@ -28,7 +28,6 @@ public class BaseActivity extends ActionBarActivity {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-
     private String[] mMenuTitles = new String[]{"Measure", "Profile", "Logbook", "How To", "About", "Logout"};
     private CharSequence mTitle;
 
@@ -38,16 +37,6 @@ public class BaseActivity extends ActionBarActivity {
 
         /* Set content view and fragment positioning. */
         setContentView(R.layout.single_fragment_drawer_activity);
-        FragmentManager fm = getFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
-
-        /* If there's no fragment already, add SplashFragment. */
-        if (fragment == null) {
-            fragment = new SplashFragment();
-            fm.beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
-                    .commit();
-        }
 
         /* Setup the Toolbar. */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,13 +61,13 @@ public class BaseActivity extends ActionBarActivity {
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
             }
         };
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
+        mDrawerToggle.syncState(); // to properly show burger-arrow as per Android documentation
 
         /* In the beginning, show item(0) : Measure*/
         if (savedInstanceState == null) {
@@ -114,33 +103,38 @@ public class BaseActivity extends ActionBarActivity {
         /* Correspond with mMenuTitles string. */
         switch (position) {
             case 0: /* Measure. */
-                ft.replace(R.id.fragmentContainer, new MeasureFragment()).addToBackStack("measure").commit();
+                ft.replace(R.id.fragmentContainer, new MeasureFragment())
+                        .addToBackStack("measure").commit();
                 mTitle = "Measure";
                 break;
 
             case 1: /* Profile. */
-                ft.replace(R.id.fragmentContainer, new ProfileFragment()).addToBackStack("profile").commit();
+                ft.replace(R.id.fragmentContainer, new ProfileFragment())
+                        .addToBackStack("profile").commit();
                 mTitle = "Profile";
                 break;
 
             case 2: /* Logbook. */
-                ft.replace(R.id.fragmentContainer, new LogbookFragment()).addToBackStack("logbook").commit();
+                ft.replace(R.id.fragmentContainer, new LogbookFragment())
+                        .addToBackStack("logbook").commit();
                 mTitle = "Logbook";
                 break;
 
             case 3: /* How To. */
-                ft.replace(R.id.fragmentContainer, new HowToFragment()).addToBackStack("howto").commit();
+                ft.replace(R.id.fragmentContainer, new HowToFragment())
+                        .addToBackStack("howto").commit();
                 mTitle = "How To";
                 break;
 
             case 4: /* About. */
-                ft.replace(R.id.fragmentContainer, new AboutFragment()).addToBackStack("about").commit();
+                ft.replace(R.id.fragmentContainer, new AboutFragment())
+                        .addToBackStack("about").commit();
                 mTitle = "About";
                 break;
 
             case 5: /* Logout. */
-                PreferenceManager.getDefaultSharedPreferences(this
-                        .getApplicationContext()).edit()
+                PreferenceManager.getDefaultSharedPreferences(
+                        this.getApplicationContext()).edit()
                         .putInt(Config.LOGGED_IN_USER_ID, 0).commit();
                 startActivity(new Intent(BaseActivity.this, SplashActivity.class));
                 break;

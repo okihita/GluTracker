@@ -10,6 +10,7 @@ import com.okihita.glutracker.ViewBase.LogbookFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ItemAdapter extends ArrayAdapter<MeasurementItem> {
 
@@ -29,10 +30,9 @@ public class ItemAdapter extends ArrayAdapter<MeasurementItem> {
 
         // Configure the view for this item.
         MeasurementItem mi = getItem(position);
-
         TextView date = (TextView) convertView.findViewById(R.id.meaitem_TextView_date);
 
-        String s = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(mi.getTanggalAmbil());
+        String s = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).format(mi.getTanggalAmbil());
         date.setText(s);
         TextView kadar = (TextView) convertView.findViewById(R.id.meaitem_TextView_kadar);
         kadar.setText(String.valueOf(mi.getKadar()) + " mg/dL");

@@ -3,6 +3,7 @@ package com.okihita.glutracker.ViewBase;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,6 @@ public class GraphFragment extends Fragment {
         chart.getAxisRight().setEnabled(false);
     }
 
-    // Todo nanti ubah semua ke sini
     private void setSpecificChartData(ArrayList<MeasurementItem> items, int mode) {
         // Filtering data
         String tanggalTemp = "";
@@ -182,8 +182,11 @@ public class GraphFragment extends Fragment {
         mChartRandom.setData(randomBarData);
     }
 
+    /**
+     * Contacting server to receive items.
+     */
     private void fetchMeasurementItems() {
-        /* Building request query. */
+
         Uri.Builder mBaseUriBuilder = (new Uri.Builder()).scheme("http")
                 .authority(Config.BASE_URL)
                 .appendPath(Config.SUBDOMAIN_ADDRESS);
@@ -219,4 +222,9 @@ public class GraphFragment extends Fragment {
         mRequestQueue.add(measurementRequest);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("About");
+    }
 }
