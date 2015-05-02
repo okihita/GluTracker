@@ -30,13 +30,13 @@ public class ItemAdapter extends ArrayAdapter<MeasurementItem> {
 
         // Configure the view for this item.
         MeasurementItem mi = getItem(position);
-        TextView date = (TextView) convertView.findViewById(R.id.meaitem_TextView_date);
+        TextView date = (TextView) convertView.findViewById(R.id.measurementItem_TextView_date);
 
         String s = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).format(mi.getTanggalAmbil());
         date.setText(s);
-        TextView kadar = (TextView) convertView.findViewById(R.id.meaitem_TextView_kadar);
+        TextView kadar = (TextView) convertView.findViewById(R.id.measurementItem_TextView_kadar);
         kadar.setText(String.valueOf(mi.getKadar()) + " mg/dL");
-        TextView jenis = (TextView) convertView.findViewById(R.id.meaitem_TextView_jenis);
+        TextView jenis = (TextView) convertView.findViewById(R.id.measurementItem_TextView_jenis);
         jenis.setText(String.valueOf(mi.getJenisTeks()));
         return convertView;
     }

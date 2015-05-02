@@ -42,6 +42,8 @@ public class GraphFragment extends Fragment {
     private ArrayList<MeasurementItem> mUniqueDatePOSTMEALMeasurementItems = new ArrayList<>();
     private ArrayList<MeasurementItem> mUniqueDateRANDOMMeasurementItems = new ArrayList<>();
 
+    private SimpleDateFormat mysdf = (new SimpleDateFormat("dd MMMM", new Locale("id", "ID")));
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,25 +73,12 @@ public class GraphFragment extends Fragment {
         chart.getAxisRight().setEnabled(false);
     }
 
-    private void setSpecificChartData(ArrayList<MeasurementItem> items, int mode) {
-        // Filtering data
-        String tanggalTemp = "";
-        for (int i = 0; i < mMeasurementItems.size(); i++) {
-            String tanggalSekarang = (new SimpleDateFormat("dd MMMM")).format(mMeasurementItems.get(i).getTanggalAmbil());
-            if (!tanggalSekarang.equals(tanggalTemp) && mMeasurementItems.get(i).getJenis() == mode) {
-                items.add(mMeasurementItems.get(i));
-                tanggalTemp = tanggalSekarang;
-                Log.d(Config.TAG, "Tanggal " + tanggalSekarang + " dengan tipe " + mMeasurementItems.get(i).getJenisTeks()
-                        + " masuk. Nilai: " + mMeasurementItems.get(i).getKadar());
-            }
-        }
-    }
-
     private void setChartData() {
+        /* TIAP INDIVIDU */
         // PREMEAL
-        String tanggalTempPremeal = (new SimpleDateFormat("dd MMMM")).format(mMeasurementItems.get(0).getTanggalAmbil());
+        String tanggalTempPremeal = (mysdf).format(mMeasurementItems.get(0).getTanggalAmbil());
         for (int i = 0; i < mMeasurementItems.size(); i++) {
-            String tanggalSekarang = (new SimpleDateFormat("dd MMMM")).format(mMeasurementItems.get(i).getTanggalAmbil());
+            String tanggalSekarang = (mysdf).format(mMeasurementItems.get(i).getTanggalAmbil());
             if (!tanggalSekarang.equals(tanggalTempPremeal) && mMeasurementItems.get(i).getJenis() == Config.MEASUREMENT_MODE_PREMEAL) {
                 mUniqueDatePREMEALMeasurementItems.add(mMeasurementItems.get(i));
                 tanggalTempPremeal = tanggalSekarang;
@@ -107,10 +96,22 @@ public class GraphFragment extends Fragment {
             yValsPremeal.add(new BarEntry(mUniqueDatePREMEALMeasurementItems.get(i).getKadar(), i));
         }
 
+        /* Buat sebuah set: PREMEAL. */
+        BarDataSet datasetPremeal = new BarDataSet(yValsPremeal, "Premeal Result");
+        datasetPremeal.setBarSpacePercent(35f);
+        datasetPremeal.setValueFormatter(new GraphValueFormatter());
+        ArrayList<BarDataSet> dataSetsPremeal = new ArrayList<>();
+        dataSetsPremeal.add(datasetPremeal);
+        BarData premealBarData = new BarData(xValsPremeal, dataSetsPremeal);
+        premealBarData.setValueTextSize(10f);
+
+        mChartPremeal.setData(premealBarData);
+
+
         // POSTMEAL
-        String tanggalTempPostmeal = (new SimpleDateFormat("dd MMMM")).format(mMeasurementItems.get(0).getTanggalAmbil());
+        String tanggalTempPostmeal = (mysdf).format(mMeasurementItems.get(0).getTanggalAmbil());
         for (int i = 0; i < mMeasurementItems.size(); i++) {
-            String tanggalSekarang = (new SimpleDateFormat("dd MMMM")).format(mMeasurementItems.get(i).getTanggalAmbil());
+            String tanggalSekarang = (mysdf).format(mMeasurementItems.get(i).getTanggalAmbil());
             if (!tanggalSekarang.equals(tanggalTempPostmeal) && mMeasurementItems.get(i).getJenis() == Config.MEASUREMENT_MODE_POSTMEAL) {
                 mUniqueDatePOSTMEALMeasurementItems.add(mMeasurementItems.get(i));
                 tanggalTempPostmeal = tanggalSekarang;
@@ -124,14 +125,15 @@ public class GraphFragment extends Fragment {
         ArrayList<BarEntry> yValsPostmeal = new ArrayList<>();
         for (int i = 0; i < mUniqueDatePOSTMEALMeasurementItems.size(); i++) {
             Log.d(Config.TAG, "Nomor " + i + " kadarnya: " + mUniqueDatePOSTMEALMeasurementItems.get(i).getKadar());
-            xValsPostmeal.add((new SimpleDateFormat("dd MMMM")).format(mUniqueDatePOSTMEALMeasurementItems.get(i).getTanggalAmbil()));
+            xValsPostmeal.add((mysdf).format(mUniqueDatePOSTMEALMeasurementItems.get(i).getTanggalAmbil()));
             yValsPostmeal.add(new BarEntry(mUniqueDatePOSTMEALMeasurementItems.get(i).getKadar(), i));
         }
 
+
         // RANDOM
-        String tanggalTempRandom = (new SimpleDateFormat("dd MMMM")).format(mMeasurementItems.get(0).getTanggalAmbil());
+        String tanggalTempRandom = (mysdf).format(mMeasurementItems.get(0).getTanggalAmbil());
         for (int i = 0; i < mMeasurementItems.size(); i++) {
-            String tanggalSekarang = (new SimpleDateFormat("dd MMMM")).format(mMeasurementItems.get(i).getTanggalAmbil());
+            String tanggalSekarang = (mysdf).format(mMeasurementItems.get(i).getTanggalAmbil());
             if (!tanggalSekarang.equals(tanggalTempRandom) && mMeasurementItems.get(i).getJenis() == Config.MEASUREMENT_MODE_RANDOM) {
                 mUniqueDateRANDOMMeasurementItems.add(mMeasurementItems.get(i));
                 tanggalTempRandom = tanggalSekarang;
@@ -145,18 +147,10 @@ public class GraphFragment extends Fragment {
         ArrayList<BarEntry> yValsRandom = new ArrayList<>();
         for (int i = 0; i < mUniqueDateRANDOMMeasurementItems.size(); i++) {
             Log.d(Config.TAG, "Nomor " + i + " kadarnya: " + mUniqueDateRANDOMMeasurementItems.get(i).getKadar());
-            xValsRandom.add((new SimpleDateFormat("dd MMMM")).format(mUniqueDateRANDOMMeasurementItems.get(i).getTanggalAmbil()));
+            xValsRandom.add((mysdf).format(mUniqueDateRANDOMMeasurementItems.get(i).getTanggalAmbil()));
             yValsRandom.add(new BarEntry(mUniqueDateRANDOMMeasurementItems.get(i).getKadar(), i));
         }
 
-        /* Buat sebuah set: PREMEAL. */
-        BarDataSet datasetPremeal = new BarDataSet(yValsPremeal, "Premeal Result");
-        datasetPremeal.setBarSpacePercent(35f);
-        datasetPremeal.setValueFormatter(new GraphValueFormatter());
-        ArrayList<BarDataSet> dataSetsPremeal = new ArrayList<>();
-        dataSetsPremeal.add(datasetPremeal);
-        BarData premealBarData = new BarData(xValsPremeal, dataSetsPremeal);
-        premealBarData.setValueTextSize(10f);
 
         /* Buat sebuah set: POSTMEAL. */
         BarDataSet datasetPostmeal = new BarDataSet(yValsPostmeal, "Postmeal Result");
@@ -168,7 +162,7 @@ public class GraphFragment extends Fragment {
         postmealBarData.setValueTextSize(10f);
 
         /* Buat sebuah set: RANDOM. */
-        BarDataSet datasetRandom = new BarDataSet(yValsPostmeal, "Random Result");
+        BarDataSet datasetRandom = new BarDataSet(yValsRandom, "Random Result");
         datasetRandom.setBarSpacePercent(35f);
         datasetRandom.setValueFormatter(new GraphValueFormatter());
         ArrayList<BarDataSet> dataSetsRandom = new ArrayList<>();
@@ -177,7 +171,6 @@ public class GraphFragment extends Fragment {
         randomBarData.setValueTextSize(10f);
 
         /* Attach datasets to charts. */
-        mChartPremeal.setData(premealBarData);
         mChartPostmeal.setData(postmealBarData);
         mChartRandom.setData(randomBarData);
     }
@@ -225,6 +218,6 @@ public class GraphFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("About");
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Graph");
     }
 }

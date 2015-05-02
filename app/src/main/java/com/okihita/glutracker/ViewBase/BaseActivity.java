@@ -75,10 +75,6 @@ public class BaseActivity extends ActionBarActivity {
         return super.onCreateView(name, context, attrs);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
     public void onBackPressed() {

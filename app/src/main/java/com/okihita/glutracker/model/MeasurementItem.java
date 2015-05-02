@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class MeasurementItem {
@@ -20,32 +21,16 @@ public class MeasurementItem {
     private Date mTanggalAmbil;
     private int mJenis;
 
-    public MeasurementItem() {
-        mId = 0;
-        mKadar = new Random().nextInt(40) + 80;
-        mTanggalAmbil = new Date();
-        mJenis = 0;
-    }
-
     public MeasurementItem(JSONObject jsonObject) throws JSONException {
         mId = jsonObject.getInt(JSON_ID);
         mKadar = jsonObject.getInt(JSON_KADAR);
         mJenis = jsonObject.getInt(JSON_JENIS);
         try {
-            mTanggalAmbil = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
-                    .parse(jsonObject.getString(JSON_DATE));
+            mTanggalAmbil = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).parse(jsonObject.getString(JSON_DATE));
         } catch (ParseException ignored) {
         }
     }
 
-    public JSONObject toJSON() throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put(JSON_ID, mId);
-        json.put(JSON_DATE, mTanggalAmbil.toString());
-        json.put(JSON_KADAR, mKadar);
-        json.put(JSON_JENIS, String.valueOf(mJenis));
-        return json;
-    }
 
     public int getId() {
         return mId;
