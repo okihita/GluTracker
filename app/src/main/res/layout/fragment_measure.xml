@@ -1,23 +1,22 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/glutracker_medium_padding">
 
     <TextView
-        android:id="@+id/MeaFrag_TV_name"
+        android:id="@+id/measure_TextView_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Hi, user!"
         android:textColor="@color/material_deep_teal_500"
         android:textSize="@dimen/abc_text_size_headline_material"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
     <LinearLayout
-        android:id="@+id/SF_ButtonBar_mode"
+        android:id="@+id/measure_ButtonBar_modes"
         style="?android:buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,60 +25,51 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/SF_Button_premeal"
+            android:id="@+id/measure_Button_premeal"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:text="PRE"
-            />
+            android:text="@string/measure_Button_premeal"
+            tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/SF_Button_postmeal"
+            android:id="@+id/measure_Button_postmeal"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:text="POST"
-            />
+            android:text="@string/measure_Button_postmeal"
+            tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/SF_Button_random"
+            android:id="@+id/measure_Button_random"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:text="RANDOM"
-            />
+            android:text="@string/measure_Button_random"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
     <com.filippudak.ProgressPieView.ProgressPieView
-        android:id="@+id/FM_progressPieView"
+        android:id="@+id/measure_progressPieView"
         android:layout_width="175dp"
         android:layout_height="175dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"/>
-
-    <TextView
-        android:id="@+id/Measure_TextView_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text=""/>
+        android:layout_margin="8dp" />
 
     <TextView
         android:id="@+id/Measure_TextView_resultText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:text="Select measurement mode."/>
+        android:gravity="center"/>
 
     <Button
         android:id="@+id/SF_Button_start"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:enabled="false"
-        android:text="START MEASURING"
-        />
+        android:text="START MEASURING" />
 
     <LinearLayout
         style="?android:buttonBarStyle"
@@ -93,8 +83,7 @@
             android:layout_height="64dp"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="SAVE RESULT"
-            />
+            android:text="SAVE RESULT" />
 
         <Button
             android:id="@+id/SF_Button_reset"
@@ -102,8 +91,7 @@
             android:layout_height="64dp"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="MEASURE AGAIN"
-            />
+            android:text="MEASURE AGAIN" />
 
     </LinearLayout>
 

@@ -33,7 +33,6 @@ public class ProfileEditorFragment extends Fragment {
     private TextView mGenderField;
     private TextView mEmailField;
     private int mLoggedInUserId;
-    private int mUserId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class ProfileEditorFragment extends Fragment {
 
     private void updateUserInfo() {
         final String requestString = Config.BASE_URL
-                + "edituser.php?id=" + mUserId
+                + "edituser.php?id=" + mLoggedInUserId
                 + "&name=" + mNameField.getText()
                 + "&pass=hai"
                 + "&date=" + mBirthdateField.getText();

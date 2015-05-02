@@ -30,13 +30,14 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class LogbookFragment extends Fragment {
 
     private ListView mMeasurementListView;
     private RequestQueue mRequestQueue;
-    private ArrayList<MeasurementItem> mMeasurementItems = new ArrayList<>();
-    private ArrayList<MeasurementItem> mPartialMeasurementItems = new ArrayList<>();
+    private final ArrayList<MeasurementItem> mMeasurementItems = new ArrayList<>();
+    private final ArrayList<MeasurementItem> mPartialMeasurementItems = new ArrayList<>();
     private ItemAdapter mItemAdapter;
 
     @Override
@@ -93,9 +94,7 @@ public class LogbookFragment extends Fragment {
 
                 /* Get user values from SharedPreferences. */
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-                boolean isPregnant = sp.getBoolean(Config.IS_PREGNANT, false);
-                int ageRange = sp.getInt(Config.AGE_RANGE, 1);
-                boolean isWithHistory = sp.getBoolean(Config.IS_DIABETES, false);
+
                 String username = sp.getString(Config.LOGGED_IN_USER_NAME, "Username");
                 int age = sp.getInt(Config.AGE, 20);
 
@@ -104,18 +103,16 @@ public class LogbookFragment extends Fragment {
                 sharingIntent.setType("text/plain");
 
                 String shareBody = "Data Pengukuran 7 Hari Terakhir\n" + username + "\n";
-                /* Cek semua item dalam list.
-                * Jika tanggal pengambilan termasuk dalam tujuh hari ke belakang, tampilkan. */
                 String currentDate = "";
                 for (int i = 0; i < mMeasurementItems.size(); i++) {
                     MeasurementItem mi = mMeasurementItems.get(i);
-                    String itemDate = (new SimpleDateFormat("EEE, d MMM yyyy")).format(mi.getTanggalAmbil());
+                    String itemDate = (new SimpleDateFormat("EEE, d MMM yyyy", new Locale("id", "ID"))).format(mi.getTanggalAmbil());
                     // If the date is different, tampilkan tanggalnya
                     if (!currentDate.equals(itemDate)) {
                         currentDate = itemDate;
                         shareBody += "\n" + itemDate + "\n";
                     }
-                    shareBody += (new SimpleDateFormat("HH:mm")).format(mi.getTanggalAmbil());
+                    shareBody += (new SimpleDateFormat("HH:mm", new Locale("id", "ID"))).format(mi.getTanggalAmbil());
                     shareBody += " - (" + mi.getJenisTeks().toLowerCase() + ") " + mi.getKadar() + "mg/dL ";
 
                     /**
@@ -202,7 +199,7 @@ public class LogbookFragment extends Fragment {
     }
 
     /* Changes ListView's content based on user's mode selection. */
-    void repopulateList(int measurementMode) {
+    private void repopulateList(int measurementMode) {
         mPartialMeasurementItems.clear();
         for (int i = 0; i < mMeasurementItems.size(); i++) {
             if (mMeasurementItems.get(i).getJenis() == measurementMode) {

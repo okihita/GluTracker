@@ -17,11 +17,6 @@ public class HowToFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_how_to, container, false);
         view.findViewById(R.id.FHT_Button_continue).setOnClickListener(new View.OnClickListener() {

@@ -2,17 +2,13 @@ package com.okihita.glutracker.ViewBase;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +22,7 @@ public class BaseActivity extends ActionBarActivity {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private String[] mMenuTitles = new String[]{"Measure", "Profile", "Logbook", "How To", "About", "Logout"};
+    private final String[] mMenuTitles = new String[]{"Measure", "Profile", "Logbook", "How To", "About", "Logout"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,11 +64,6 @@ public class BaseActivity extends ActionBarActivity {
         // set first screen on launch to Profile
         if (savedInstanceState == null)
             selectItem(1);
-    }
-
-    @Override
-    public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
-        return super.onCreateView(name, context, attrs);
     }
 
 

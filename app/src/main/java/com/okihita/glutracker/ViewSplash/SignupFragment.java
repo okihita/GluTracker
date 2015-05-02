@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +38,9 @@ import java.util.regex.Pattern;
 
 public class SignupFragment extends Fragment {
 
-    ArrayAdapter<CharSequence> dateAdapter;
-    List<CharSequence> dateArrayList = new ArrayList<>();
-    RequestQueue mRequestQueue;
+    private ArrayAdapter<CharSequence> dateAdapter;
+    private final List<CharSequence> dateArrayList = new ArrayList<>();
+    private RequestQueue mRequestQueue;
     private LinearLayout pregnantSwitchView;
     private int numberOfDays = 30;
     private Spinner mSpinnerYear;
@@ -58,13 +57,11 @@ public class SignupFragment extends Fragment {
     private int isPregnant = 0;
     private int isWithHistory = 0;
 
-    public static boolean isEmailValid(String email) {
-        boolean isValid = false;
+    private static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
-        if (matcher.matches()) isValid = true;
-        return isValid;
+        return matcher.matches();
     }
 
     @Override
@@ -103,7 +100,7 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!isEmailValid(s.toString())) {
+                if (isEmailValid(s.toString())) {
                     mEmailEditText.setTextColor(0xFF882222);
                 } else {
                     mEmailEditText.setTextColor(0xFF228822);
@@ -189,50 +186,25 @@ public class SignupFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0: // JAN
-                        numberOfDays = 31;
-                        break;
                     case 1: // FEB
                         int year = Integer.parseInt(mSpinnerYear.getSelectedItem().toString());
-                        if (year % 100 == 0) {
-                            if (year % 400 == 0) {
-                                numberOfDays = 29;
-                            } else {
-                                numberOfDays = 28;
-                            }
-                        } else if (year % 4 == 0) {
+                        if (year % 4 == 0 || (year % 100 == 0 && year % 400 == 0))
                             numberOfDays = 29;
-                        } else {
+                        else
                             numberOfDays = 28;
-                        }
-                        break;
-                    case 2: // MAR
-                        numberOfDays = 31;
                         break;
                     case 3: // APR
-                        numberOfDays = 30;
-                        break;
-                    case 4: // MAY
-                        numberOfDays = 31;
-                        break;
                     case 5: // JUN
-                        numberOfDays = 30;
-                        break;
-                    case 6: // JUL
-                        numberOfDays = 31;
-                        break;
-                    case 7: // AUG
-                        numberOfDays = 31;
-                        break;
                     case 8: // SEP
-                        numberOfDays = 30;
-                        break;
-                    case 9: // OCT
-                        numberOfDays = 31;
-                        break;
                     case 10: // NOV
                         numberOfDays = 30;
                         break;
+                    case 0: // JAN
+                    case 2: // MAR
+                    case 4: // MAY
+                    case 6: // JUL
+                    case 7: // AUG
+                    case 9: // OCT
                     case 11: // DEC
                         numberOfDays = 31;
                         break;
@@ -283,8 +255,6 @@ public class SignupFragment extends Fragment {
                         .appendQueryParameter("history", String.valueOf(isWithHistory));
         String userSignupQuery = mBaseUriBuilder.build().toString();
 
-        Log.d("Itin", userSignupQuery);
-
         // Build the request
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 userSignupQuery,
@@ -295,7 +265,6 @@ public class SignupFragment extends Fragment {
                         * If the operation success, this will return the ID of the newly-
                         * created user. If it fails, it will return 0.
                         * */
-                        Log.d("TAG", response);
                         if ((response.substring(1)).equals("0")) {
                             Toast.makeText(getActivity(), "Email already registered.", Toast.LENGTH_SHORT).show();
                         } else {
@@ -309,7 +278,6 @@ public class SignupFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("TAG", "Error: " + error.toString());
                 Toast.makeText(getActivity(), "Network error.\nPlease try again.", Toast.LENGTH_SHORT).show();
             }
         });

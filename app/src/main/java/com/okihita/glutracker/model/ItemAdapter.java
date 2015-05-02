@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class ItemAdapter extends ArrayAdapter<MeasurementItem> {
 
-    private LogbookFragment mLogbookFragment;
+    private final LogbookFragment mLogbookFragment;
 
     public ItemAdapter(LogbookFragment logbookFragment, ArrayList<MeasurementItem> items) {
         super(logbookFragment.getActivity(), 0, items);

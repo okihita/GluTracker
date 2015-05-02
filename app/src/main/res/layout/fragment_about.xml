@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tentang"
+        android:text="@string/about_about"
         android:textColor="@color/material_deep_teal_500"
         android:textSize="@dimen/abc_text_size_headline_material"
         android:textStyle="bold"/>
@@ -24,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@color/material_deep_teal_500"
-        android:text="Kunjungi Situs Kami"
+        android:text="@string/about_visit_site"
         android:textColor="@color/primary_text_default_material_dark"/>
 </LinearLayout>

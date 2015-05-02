@@ -13,7 +13,7 @@
             style="?android:textAppearanceMedium"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Premeal Graph (in mg/dL)"
+            android:text="@string/graph_premealGraph"
             android:textColor="@color/material_deep_teal_500"
             android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
             style="?android:textAppearanceMedium"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Postmeal Graph (in mg/dL)"
+            android:text="@string/graph_postmealGraph"
             android:textColor="@color/material_deep_teal_500"
             android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
             style="?android:textAppearanceMedium"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Random Graph (in mg/dL)"
+            android:text="@string/graph_randomGraph"
             android:textColor="@color/material_deep_teal_500"
             android:textStyle="bold" />
 

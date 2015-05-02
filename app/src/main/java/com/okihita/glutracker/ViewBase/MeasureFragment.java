@@ -25,7 +25,6 @@ import com.filippudak.ProgressPieView.ProgressPieView;
 import com.okihita.glutracker.R;
 import com.okihita.glutracker.util.Config;
 
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -48,8 +47,8 @@ public class MeasureFragment extends Fragment {
     private TextView mResultTV;
 
     private Runnable stringupdater;
-    private Handler mHandler = new Handler();
-    private int mInterval = 25;
+    private final Handler mHandler = new Handler();
+    private final int mInterval = 25;
     private int mProgressPercentage;
 
     /* Menentukan kapan merah-hijau-kuning. */
@@ -67,12 +66,12 @@ public class MeasureFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_measure, container, false);
 
-        TextView mGreetingTextView = (TextView) view.findViewById(R.id.MeaFrag_TV_name);
-        mPremealModeButton = (Button) view.findViewById(R.id.SF_Button_premeal);
-        mPostmealModeButton = (Button) view.findViewById(R.id.SF_Button_postmeal);
-        mRandomModeButton = (Button) view.findViewById(R.id.SF_Button_random);
+        TextView mGreetingTextView = (TextView) view.findViewById(R.id.measure_TextView_username);
+        mPremealModeButton = (Button) view.findViewById(R.id.measure_Button_premeal);
+        mPostmealModeButton = (Button) view.findViewById(R.id.measure_Button_postmeal);
+        mRandomModeButton = (Button) view.findViewById(R.id.measure_Button_random);
 
-        mProgressPieView = (ProgressPieView) view.findViewById(R.id.FM_progressPieView);
+        mProgressPieView = (ProgressPieView) view.findViewById(R.id.measure_progressPieView);
         mStartButton = (Button) view.findViewById(R.id.SF_Button_start);
         mResultTV = (TextView) view.findViewById(R.id.Measure_TextView_resultText);
         mSaveButton = (Button) view.findViewById(R.id.SF_Button_save);
@@ -144,17 +143,14 @@ public class MeasureFragment extends Fragment {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    saveToServer();
-                } catch (NoSuchAlgorithmException ignored) {
-                }
+                saveToServer();
             }
         });
 
         return view;
     }
 
-    void prepareForMeasuring(int pressedButton, View view) {
+    private void prepareForMeasuring(int pressedButton, View view) {
 
         /* Change button states. */
         view.setPressed(true);
@@ -184,7 +180,7 @@ public class MeasureFragment extends Fragment {
         }
     }
 
-    void finishMeasuring() {
+    private void finishMeasuring() {
 
         /* Reset button states. */
         mPremealModeButton.setPressed(false);
@@ -232,7 +228,7 @@ public class MeasureFragment extends Fragment {
         mResultTV.setText(resultText);
     }
 
-    private void saveToServer() throws NoSuchAlgorithmException {
+    private void saveToServer() {
         String sDate = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).format(mTanggalWaktu);
 
         /* Building request query. */

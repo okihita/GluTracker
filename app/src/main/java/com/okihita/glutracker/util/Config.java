@@ -18,7 +18,7 @@ public class Config {
 
     public static final String AGE = "age";
     public static final String AGE_RANGE = "agerange";
-    public static final String IS_PREGNANT = "ispregnant";
+    private static final String IS_PREGNANT = "ispregnant";
     public static final String IS_DIABETES = "isdiabetes";
 
     public static final String MEASUREMENT_ADDITION_ENTRY_POINT = "add.php";

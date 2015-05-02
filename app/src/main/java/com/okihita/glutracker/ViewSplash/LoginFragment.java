@@ -34,9 +34,9 @@ import java.util.Locale;
 
 public class LoginFragment extends Fragment {
 
-    EditText mUsernameField;
-    RequestQueue mRequestQueue;
-    EditText mPasswordField;
+    private EditText mUsernameField;
+    private RequestQueue mRequestQueue;
+    private EditText mPasswordField;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

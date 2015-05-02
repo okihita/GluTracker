@@ -3,17 +3,13 @@ package com.okihita.glutracker.ViewSplash;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.okihita.glutracker.R;
 import com.okihita.glutracker.ViewBase.BaseActivity;
@@ -21,8 +17,7 @@ import com.okihita.glutracker.util.Config;
 
 public class SplashActivity extends ActionBarActivity {
 
-    FragmentManager mFragmentManager;
-    FragmentTransaction mFragmentTransaction;
+    private FragmentManager mFragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,11 +47,6 @@ public class SplashActivity extends ActionBarActivity {
     }
 
     @Override
-    public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
-        return super.onCreateView(name, context, attrs);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.splash_menu, menu);
@@ -65,7 +55,7 @@ public class SplashActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mFragmentTransaction = mFragmentManager.beginTransaction();
+        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
         switch (item.getItemId()) {
 
