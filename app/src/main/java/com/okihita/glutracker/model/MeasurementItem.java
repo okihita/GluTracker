@@ -31,7 +31,6 @@ public class MeasurementItem {
         }
     }
 
-
     public int getId() {
         return mId;
     }
