@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +39,6 @@ public class LogbookFragment extends Fragment {
     private ArrayList<MeasurementItem> mPartialMeasurementItems = new ArrayList<>();
     private ItemAdapter mItemAdapter;
 
-    /* Measurement mode selection buttons. */
-    private Button mPremealModeButton;
-    private Button mPostmealModeButton;
-    private Button mRandomModeButton;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,24 +58,21 @@ public class LogbookFragment extends Fragment {
         mItemAdapter = new ItemAdapter(this, mMeasurementItems);
         mMeasurementListView.setAdapter(mItemAdapter);
 
-        mPremealModeButton = (Button) view.findViewById(R.id.FLog_Button_premeal);
-        mPremealModeButton.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.FLog_Button_premeal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 repopulateList(Config.MEASUREMENT_MODE_PREMEAL);
             }
         });
 
-        mPostmealModeButton = (Button) view.findViewById(R.id.FLog_Button_postmeal);
-        mPostmealModeButton.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.FLog_Button_postmeal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 repopulateList(Config.MEASUREMENT_MODE_POSTMEAL);
             }
         });
 
-        mRandomModeButton = (Button) view.findViewById(R.id.FLog_Button_random);
-        mRandomModeButton.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.FLog_Button_random).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 repopulateList(Config.MEASUREMENT_MODE_RANDOM);
@@ -92,9 +83,7 @@ public class LogbookFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
                 ft.replace(R.id.fragmentContainer, new MeasureFragment()).addToBackStack("measure").commit();
-                ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Measure");
             }
         });
 
@@ -136,7 +125,7 @@ public class LogbookFragment extends Fragment {
                      * 3 = high
                      * 4 = very high
                      **/
-                    switch (Config.bloodSugarLevel(isPregnant, ageRange, isWithHistory, mi.getJenis(), mi.getKadar())) {
+                    switch (Config.bloodSugarLevel(getActivity().getApplicationContext(), mi.getJenis(), mi.getKadar())) {
                         case 0:
                             shareBody += "(very low)";
                             break;
@@ -214,16 +203,12 @@ public class LogbookFragment extends Fragment {
 
     /* Changes ListView's content based on user's mode selection. */
     void repopulateList(int measurementMode) {
-        Log.d(Config.TAG, "Repopulation commenced!");
         mPartialMeasurementItems.clear();
         for (int i = 0; i < mMeasurementItems.size(); i++) {
             if (mMeasurementItems.get(i).getJenis() == measurementMode) {
-                Log.d(Config.TAG, "Item: " + String.valueOf(mMeasurementItems.get(i).getJenis()) + ", Mode: " + measurementMode);
                 mPartialMeasurementItems.add(mMeasurementItems.get(i));
             }
         }
-
-        Log.d(Config.TAG, "New size: " + String.valueOf(mPartialMeasurementItems.size()));
         mItemAdapter = new ItemAdapter(this, mPartialMeasurementItems);
         mMeasurementListView.setAdapter(mItemAdapter);
         mItemAdapter.notifyDataSetChanged();

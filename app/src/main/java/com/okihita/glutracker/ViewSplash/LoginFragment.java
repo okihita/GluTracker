@@ -24,6 +24,12 @@ import com.okihita.glutracker.util.Config;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class LoginFragment extends Fragment {
@@ -31,9 +37,6 @@ public class LoginFragment extends Fragment {
     EditText mUsernameField;
     RequestQueue mRequestQueue;
     EditText mPasswordField;
-
-    String mReceivedPassword;
-    int mReceivedUserId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,16 +80,22 @@ public class LoginFragment extends Fragment {
                     public void onResponse(JSONArray response) {
                         Log.d(Config.TAG, "RESPONSE: " + response.toString());
                         try {
-                            mReceivedPassword = response.getJSONObject(0).getString("password");
-                            mReceivedUserId = response.getJSONObject(0).getInt("id");
 
-                            /* Jika sandi cocok, masukkan id ke dalam Shared Preferences, lalu masuk ke menu. */
-                            if (mReceivedPassword.equals(mPasswordField.getText().toString())) {
-                                PreferenceManager.getDefaultSharedPreferences(
-                                        getActivity().getApplicationContext()).edit()
-                                        .putInt(Config.LOGGED_IN_USER_ID, mReceivedUserId).commit();
-                                Log.d(Config.TAG, String.valueOf(mReceivedUserId));
+                            JSONObject object = response.getJSONObject(0);
 
+                            /* If passwords match, update Shared Preference and go to main screen. */
+                            if (object.getString("password").equals(mPasswordField.getText().toString())) {
+
+                                // Calculate date of birth
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                                Calendar dob = Calendar.getInstance();
+                                dob.setTime(sdf.parse(object.getString("birthdate")));
+                                Calendar today = Calendar.getInstance();
+                                int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+                                if (today.get(Calendar.DAY_OF_YEAR) <= dob.get(Calendar.DAY_OF_YEAR))
+                                    age--;
+
+                                updateSharedPreference(object.getInt("id"), object.getString("name"), age, object.getInt("history") == 1);
                                 startActivity(new Intent(getActivity(), BaseActivity.class));
 
                             /* Jika tidak, berikan pemberitahuan surel atau sandi salah. */
@@ -95,6 +104,7 @@ public class LoginFragment extends Fragment {
                             }
                         } catch (JSONException ignored) {
                             Toast.makeText(getActivity(), "Network error. Please try again.", Toast.LENGTH_SHORT).show();
+                        } catch (ParseException ignored) {
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -104,5 +114,35 @@ public class LoginFragment extends Fragment {
         });
 
         mRequestQueue.add(userLoginRequest);
+    }
+
+
+    private void updateSharedPreference(int userId, String userName, int userAge, boolean isUserDiabetes) {
+
+        // User ID
+        PreferenceManager.getDefaultSharedPreferences(
+                getActivity().getApplicationContext()).edit()
+                .putInt(Config.LOGGED_IN_USER_ID, userId).commit();
+
+        // Full name. Will be shortened in Measurement's greeting
+        PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .edit().putString(Config.LOGGED_IN_USER_NAME, userName).commit();
+
+        // Is user pregnant?
+        PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .edit().putInt(Config.AGE, userAge).commit();
+
+        // Age range
+        int ageRange = 1;
+        if (userAge > 6) ageRange = 2;
+        if (userAge > 12) ageRange = 3;
+        if (userAge > 19) ageRange = 4;
+
+        PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .edit().putInt(Config.AGE_RANGE, ageRange).commit();
+
+        // Diabetes history
+        PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .edit().putBoolean(Config.IS_DIABETES, isUserDiabetes).commit();
     }
 }

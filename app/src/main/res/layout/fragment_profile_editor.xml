@@ -6,7 +6,7 @@
 
     <ImageView
         android:layout_gravity="center"
-        android:id="@+id/networkImageView"
+        android:id="@+id/profileEditor_ImageView_avatar"
         android:layout_width="150dp"
         android:src="@drawable/ursula"
         android:layout_height="250dp"
@@ -28,7 +28,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/profile_TextView_name"
+                android:id="@+id/profileEditor_TextView_name"
                 android:layout_width="wrap_content"
                 style="?android:textAppearanceMedium"
                 android:layout_column="2"
@@ -46,7 +46,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/profile_TextView_birthdate"
+                android:id="@+id/profileEditor_TextView_birthdate"
                 android:layout_width="wrap_content"
                 style="?android:textAppearanceMedium"
                 android:layout_column="2"
@@ -64,7 +64,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/profile_TextView_gender"
+                android:id="@+id/profileEditor_TextView_gender"
                 android:layout_width="wrap_content"
                 style="?android:textAppearanceMedium"
                 android:layout_column="2"
@@ -95,7 +95,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profile_TextView_email"
+                android:id="@+id/profileEditor_TextView_email"
                 android:layout_width="wrap_content"
                 style="?android:textAppearanceMedium"
                 android:layout_column="2"
@@ -113,10 +113,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/profileEditor_TextView_password"
                 android:layout_width="wrap_content"
                 android:layout_column="2"
                 style="?android:textAppearanceMedium"
-                android:text=": ******************" />
+                android:text=": " />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,7 +129,7 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/ProfEdFrag_Button_save"
+        android:id="@+id/profileEditor_Button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SAVE" />

@@ -28,6 +28,7 @@ import com.okihita.glutracker.util.Config;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class MeasureFragment extends Fragment {
@@ -39,14 +40,12 @@ public class MeasureFragment extends Fragment {
     private RequestQueue mRequestQueue;
     private ProgressPieView mProgressPieView;
 
-    private TextView mGreetingTextView;
     private Button mPremealModeButton;
     private Button mPostmealModeButton;
     private Button mRandomModeButton;
     private Button mStartButton;
     private Button mSaveButton;
     private TextView mResultTV;
-    private TextView mCategoryTV;
 
     private Runnable stringupdater;
     private Handler mHandler = new Handler();
@@ -58,22 +57,20 @@ public class MeasureFragment extends Fragment {
     private int mAgeRange;
     private boolean mIsDiabetes;
     private boolean mIsPregnant;
-
     private int mKadar;
-
     private Date mTanggalWaktu = new Date();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mRequestQueue = Volley.newRequestQueue(getActivity());
         super.onCreate(savedInstanceState);
+        mRequestQueue = Volley.newRequestQueue(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_measure, container, false);
 
-        mGreetingTextView = (TextView) view.findViewById(R.id.MeaFrag_TV_name);
+        TextView mGreetingTextView = (TextView) view.findViewById(R.id.MeaFrag_TV_name);
         mPremealModeButton = (Button) view.findViewById(R.id.SF_Button_premeal);
         mPostmealModeButton = (Button) view.findViewById(R.id.SF_Button_postmeal);
         mRandomModeButton = (Button) view.findViewById(R.id.SF_Button_random);
@@ -81,7 +78,6 @@ public class MeasureFragment extends Fragment {
         mProgressPieView = (ProgressPieView) view.findViewById(R.id.FM_progressPieView);
         mStartButton = (Button) view.findViewById(R.id.SF_Button_start);
         mResultTV = (TextView) view.findViewById(R.id.Measure_TextView_resultText);
-        mCategoryTV = (TextView) view.findViewById(R.id.Measure_TextView_category);
         mSaveButton = (Button) view.findViewById(R.id.SF_Button_save);
 
         /* Change username in greeting text. */
@@ -90,24 +86,6 @@ public class MeasureFragment extends Fragment {
 
         mGreetingTextView.setText("Hi, " + getFirstWord(username));
 
-        /* Show user's current category. */
-        boolean isPregnant = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
-                .getBoolean(Config.IS_PREGNANT, false);
-        int ageRange = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
-                .getInt(Config.AGE_RANGE, 1);
-        boolean isWithHistory = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
-                .getBoolean(Config.IS_DIABETES, false);
-        String categoryAndIndices = Config.whatCategory(isPregnant, ageRange, isWithHistory)
-                + "\n60, 69,| 70, 100,| 101, 130,\n 80, 99,| 100, 140,| 141, 200";
-        // mCategoryTV.setText(categoryAndIndices);
-
-        /* Config */
-        mIsDiabetes = PreferenceManager.getDefaultSharedPreferences(getActivity())
-                .getBoolean(Config.IS_DIABETES, false);
-        mIsPregnant = PreferenceManager.getDefaultSharedPreferences(getActivity())
-                .getBoolean(Config.IS_PREGNANT, false);
-        mAgeRange = PreferenceManager.getDefaultSharedPreferences(getActivity())
-                .getInt(Config.AGE_RANGE, 1);
 
         /* Progress wheel styling. */
         mProgressPieView.setProgress(0);
@@ -227,34 +205,31 @@ public class MeasureFragment extends Fragment {
 
         int levelResult = new Random().nextInt(40) + 80;
         mKadar = levelResult;
-        // mProgressPieView.setProgressColor(levelResult < 100 ? 0xFFFFBE2C : 0xFFFF4028);
         mProgressPieView.setText(String.valueOf(levelResult) + "mg/dL");
 
         String resultText;
-        int sugarlevel = Config.bloodSugarLevel(mIsPregnant, mAgeRange, mIsDiabetes, mJenisPengukuran, mKadar);
-
-        // resultText = "Your blood sugar is " + (levelResult < 100 ? "low" : "high") + "!";
-        resultText = "Your blood sugar level is";
+        int sugarlevel = Config.bloodSugarLevel(getActivity().getApplicationContext(), mJenisPengukuran, mKadar);
+        resultText = "Your blood sugar level is ";
 
         switch (sugarlevel) {
             case 0:
-                resultText += " very low";
+                resultText += "very low";
                 mProgressPieView.setProgressColor(0xFFFF4028);
                 break;
             case 1:
-                resultText += " low";
+                resultText += "low";
                 mProgressPieView.setProgressColor(0xFFFFBE2C);
                 break;
             case 2:
-                resultText += " normal";
+                resultText += "normal";
                 mProgressPieView.setProgressColor(0xFF9EFF8C);
                 break;
             case 3:
-                resultText += " high";
+                resultText += "high";
                 mProgressPieView.setProgressColor(0xFFFFBE2C);
                 break;
             case 4:
-                resultText += " very high";
+                resultText += "very high";
                 mProgressPieView.setProgressColor(0xFFFF4028);
                 break;
         }
@@ -263,7 +238,7 @@ public class MeasureFragment extends Fragment {
     }
 
     private void saveToServer() throws NoSuchAlgorithmException {
-        String sDate = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(mTanggalWaktu);
+        String sDate = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).format(mTanggalWaktu);
 
         /* Building request query. */
         Uri.Builder mBaseUriBuilder = (new Uri.Builder()).scheme("http")
@@ -299,15 +274,15 @@ public class MeasureFragment extends Fragment {
                 }
         );
 
-        /* Sending request. */
         mRequestQueue.add(saveResultItemRequest);
     }
 
+    /* To show only user's first name. */
     private String getFirstWord(String text) {
         if (text.indexOf(' ') > -1)  // Check if there is more than one word.
             return text.substring(0, text.indexOf(' ')); // Extract first word.
         else
-            return text; // Text is the first word itself.
+            return text; // Text is the first word itself
     }
 
     @Override
@@ -315,5 +290,4 @@ public class MeasureFragment extends Fragment {
         super.onResume();
         ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Measure");
     }
-
 }

@@ -24,16 +24,15 @@ public class HowToFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_how_to, container, false);
-        view.findViewById(R.id.FHT_Button_continue)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FragmentManager fm = getFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-                        ft.replace(R.id.fragmentContainer, new MeasureFragment()).addToBackStack("measure").commit();
-                    }
-                });
+        view.findViewById(R.id.FHT_Button_continue).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+                ft.replace(R.id.fragmentContainer, new MeasureFragment()).addToBackStack("measure").commit();
+            }
+        });
 
         return view;
     }

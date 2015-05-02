@@ -1,5 +1,8 @@
 package com.okihita.glutracker.util;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 public class Config {
     public static final String LOGGED_IN_USER_NAME = "username";
     public static final String TAG = "RSY";
@@ -53,7 +56,14 @@ public class Config {
     private static final int[] from20With = {60, 99, 100, 130, 131, 200, 80, 129, 130, 200, 201, 250, 60, 99, 100, 180, 161, 230};
     private static final int[] from20Without = {60, 69, 70, 100, 101, 130, 80, 99, 100, 140, 141, 200, 60, 79, 80, 120, 121, 180};
 
-    public static int bloodSugarLevel(boolean isPregnant, int ageRange, boolean isDiabetes, int measurementMode, int value) {
+    public static int bloodSugarLevel(Context context, int measurementMode, int value) {
+
+        boolean isDiabetes = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(Config.IS_DIABETES, false);
+        boolean isPregnant = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(Config.IS_PREGNANT, false);
+        int ageRange = PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(Config.AGE_RANGE, 1);
 
         int[] category = null;
         int sugarlevel = 0;

@@ -1,6 +1,7 @@
 package com.okihita.glutracker.ViewBase;
 
 import android.app.Fragment;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -8,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,13 +32,15 @@ public class ProfileEditorFragment extends Fragment {
     private TextView mBirthdateField;
     private TextView mGenderField;
     private TextView mEmailField;
-    private Button mSaveButton;
+    private int mLoggedInUserId;
     private int mUserId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRequestQueue = Volley.newRequestQueue(getActivity());
+        mLoggedInUserId = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .getInt(Config.LOGGED_IN_USER_ID, 0);
         fetchUserInfo();
     }
 
@@ -46,12 +48,11 @@ public class ProfileEditorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_editor, container, false);
 
-        mNameField = (TextView) view.findViewById(R.id.profile_TextView_name);
-        mBirthdateField = (TextView) view.findViewById(R.id.profile_TextView_birthdate);
-        mGenderField = (TextView) view.findViewById(R.id.profile_TextView_gender);
-        mEmailField = (TextView) view.findViewById(R.id.profile_TextView_email);
-        mSaveButton = (Button) view.findViewById(R.id.ProfEdFrag_Button_save);
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
+        mNameField = (TextView) view.findViewById(R.id.profileEditor_TextView_name);
+        mBirthdateField = (TextView) view.findViewById(R.id.profileEditor_TextView_birthdate);
+        mGenderField = (TextView) view.findViewById(R.id.profileEditor_TextView_gender);
+        mEmailField = (TextView) view.findViewById(R.id.profileEditor_TextView_email);
+        view.findViewById(R.id.profileEditor_Button_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateUserInfo();
@@ -84,15 +85,22 @@ public class ProfileEditorFragment extends Fragment {
                     }
                 });
 
-        // Add the request to the RequestQueue.
         mRequestQueue.add(stringRequest);
     }
 
-    // Bikin koneksi
+
     private void fetchUserInfo() {
+        /* Building request query. */
+        Uri.Builder mBaseUriBuilder = (new Uri.Builder()).scheme("http")
+                .authority(Config.BASE_URL)
+                .appendPath(Config.SUBDOMAIN_ADDRESS)
+                .appendPath(Config.USER_ENTRY_POINT)
+                .appendQueryParameter("id", String.valueOf(mLoggedInUserId));
+        String userInfoQuery = mBaseUriBuilder.build().toString();
+        Log.d(Config.TAG, "Query: " + userInfoQuery);
 
         JsonArrayRequest measurementRequest = new JsonArrayRequest(
-                Config.BASE_URL + "u.php",
+                userInfoQuery,
                 new Response.Listener<JSONArray>() {
 
                     /* Response. */
@@ -111,8 +119,6 @@ public class ProfileEditorFragment extends Fragment {
                                     getActivity().getApplicationContext()).edit()
                                     .putString(Config.LOGGED_IN_USER_NAME, object.getString("name")).commit();
 
-                            mUserId = object.getInt("id");
-
                         } catch (JSONException ignored) {
                         }
 
@@ -126,7 +132,6 @@ public class ProfileEditorFragment extends Fragment {
                 });
 
         mRequestQueue.add(measurementRequest);
-
     }
 
     @Override

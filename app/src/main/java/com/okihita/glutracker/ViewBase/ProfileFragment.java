@@ -53,7 +53,13 @@ public class ProfileFragment extends Fragment {
         mLoggedInUserId = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
                 .getInt(Config.LOGGED_IN_USER_ID, 0);
         Log.d(Config.TAG, "Logged in user ID:" + String.valueOf(mLoggedInUserId));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         fetchUserInfo(); // contacting server to get user information
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Profile");
     }
 
     @Override
@@ -126,8 +132,6 @@ public class ProfileFragment extends Fragment {
                                 age--;
                             mAgeField.setText(": " + age);
 
-                            updateSharedPreference(object.getString("name"), age, object.getInt("history") == 1);
-
                         } catch (JSONException | ParseException ignored) {
                         }
                     }
@@ -139,45 +143,7 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-        Log.d(Config.TAG, userInfoQuery);
         mRequestQueue.add(measurementRequest);
     }
 
-    private void updateSharedPreference(String userName, int userAge, boolean isUserDiabetes) {
-
-        // Full name. Will be shortened in Measurement's greeting
-        // @see
-        PreferenceManager
-                .getDefaultSharedPreferences(getActivity().getApplicationContext())
-                .edit().putString(Config.LOGGED_IN_USER_NAME, userName)
-                .commit();
-
-        // Is user pregnant?
-        PreferenceManager
-                .getDefaultSharedPreferences(getActivity().getApplicationContext())
-                .edit().putInt(Config.AGE, userAge)
-                .commit();
-
-        // Age range
-        int ageRange = 1;
-        if (userAge > 6) ageRange = 2;
-        if (userAge > 12) ageRange = 3;
-        if (userAge > 19) ageRange = 4;
-        PreferenceManager
-                .getDefaultSharedPreferences(getActivity().getApplicationContext())
-                .edit().putInt(Config.AGE_RANGE, ageRange)
-                .commit();
-
-        // Diabetes history
-        PreferenceManager
-                .getDefaultSharedPreferences(getActivity().getApplicationContext())
-                .edit().putBoolean(Config.IS_DIABETES, isUserDiabetes)
-                .commit();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Profile");
-    }
 }

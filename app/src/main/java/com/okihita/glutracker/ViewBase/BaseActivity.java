@@ -1,6 +1,5 @@
 package com.okihita.glutracker.ViewBase;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -21,7 +20,6 @@ import android.widget.ListView;
 
 import com.okihita.glutracker.R;
 import com.okihita.glutracker.ViewSplash.SplashActivity;
-import com.okihita.glutracker.ViewSplash.SplashFragment;
 import com.okihita.glutracker.util.Config;
 
 public class BaseActivity extends ActionBarActivity {
@@ -29,7 +27,6 @@ public class BaseActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] mMenuTitles = new String[]{"Measure", "Profile", "Logbook", "How To", "About", "Logout"};
-    private CharSequence mTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,6 @@ public class BaseActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         /* Setup the navigation drawer. */
-        mTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.list_item_drawer, mMenuTitles));
@@ -58,9 +54,9 @@ public class BaseActivity extends ActionBarActivity {
 
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
+
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
             }
@@ -69,11 +65,9 @@ public class BaseActivity extends ActionBarActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState(); // to properly show burger-arrow as per Android documentation
 
-        /* In the beginning, show item(0) : Measure*/
-        if (savedInstanceState == null) {
+        // set first screen on launch to Profile
+        if (savedInstanceState == null)
             selectItem(1);
-            getSupportActionBar().setTitle(mMenuTitles[1]);
-        }
     }
 
     @Override
@@ -105,31 +99,26 @@ public class BaseActivity extends ActionBarActivity {
             case 0: /* Measure. */
                 ft.replace(R.id.fragmentContainer, new MeasureFragment())
                         .addToBackStack("measure").commit();
-                mTitle = "Measure";
                 break;
 
             case 1: /* Profile. */
                 ft.replace(R.id.fragmentContainer, new ProfileFragment())
                         .addToBackStack("profile").commit();
-                mTitle = "Profile";
                 break;
 
             case 2: /* Logbook. */
                 ft.replace(R.id.fragmentContainer, new LogbookFragment())
                         .addToBackStack("logbook").commit();
-                mTitle = "Logbook";
                 break;
 
             case 3: /* How To. */
                 ft.replace(R.id.fragmentContainer, new HowToFragment())
                         .addToBackStack("howto").commit();
-                mTitle = "How To";
                 break;
 
             case 4: /* About. */
                 ft.replace(R.id.fragmentContainer, new AboutFragment())
                         .addToBackStack("about").commit();
-                mTitle = "About";
                 break;
 
             case 5: /* Logout. */
