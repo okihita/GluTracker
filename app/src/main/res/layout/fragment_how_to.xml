@@ -73,7 +73,7 @@
             <TextView
                 android:layout_column="2"
                 android:layout_width="wrap_content"
-                android:text="Buka aplikasi Smart Glucometer pada ponsel Android Anda." />
+                android:text="Buka aplikasi Smart Glucometer pada ponsel Android Anda dan lakukan login atau signup." />
         </TableRow>
 
         <TableRow>
@@ -118,7 +118,7 @@
             <TextView
                 android:layout_column="2"
                 android:layout_width="wrap_content"
-                android:text="Tekan tombol Measure untuk memulai pengukuran." />
+                android:text="Tekan tombol Start untuk memulai pengukuran." />
         </TableRow>
 
         <TableRow>
@@ -148,7 +148,7 @@
             <TextView
                 android:layout_column="2"
                 android:layout_width="wrap_content"
-                android:text="Tekan tombol Save untuk menyimpan data pengukuran atau tombol Dismiss untuk mengabaikan hasil pengukuran." />
+                android:text="Tekan tombol Save untuk menyimpan data pengukuran." />
         </TableRow>
     </TableLayout>
 
