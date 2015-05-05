@@ -14,7 +14,6 @@
         android:textSize="@dimen/abc_text_size_headline_material"
         android:textStyle="bold" />
 
-
     <LinearLayout
         android:id="@+id/measure_ButtonBar_modes"
         style="?android:buttonBarStyle"
@@ -58,18 +57,20 @@
         android:layout_margin="8dp" />
 
     <TextView
-        android:id="@+id/Measure_TextView_resultText"
+        android:id="@+id/measure_TextView_resultText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48sp"
+        android:layout_gravity="center"
         android:layout_marginBottom="16dp"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <Button
-        android:id="@+id/SF_Button_start"
+        android:id="@+id/measure_Button_start"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:enabled="false"
-        android:text="START MEASURING" />
+        android:text="@string/measure_start"
+        tools:ignore="ButtonStyle" />
 
     <LinearLayout
         style="?android:buttonBarStyle"
@@ -78,21 +79,23 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/SF_Button_save"
+            android:id="@+id/measure_Button_save"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="SAVE RESULT" />
+            android:text="@string/measure_save"
+            tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/SF_Button_reset"
+            android:id="@+id/measure_Button_reset"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="MEASURE AGAIN" />
-
+            android:text="@string/measure_again"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
+
 
 </LinearLayout>

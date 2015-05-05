@@ -72,9 +72,9 @@ public class MeasureFragment extends Fragment {
         mRandomModeButton = (Button) view.findViewById(R.id.measure_Button_random);
 
         mProgressPieView = (ProgressPieView) view.findViewById(R.id.measure_progressPieView);
-        mStartButton = (Button) view.findViewById(R.id.SF_Button_start);
-        mResultTV = (TextView) view.findViewById(R.id.Measure_TextView_resultText);
-        mSaveButton = (Button) view.findViewById(R.id.SF_Button_save);
+        mStartButton = (Button) view.findViewById(R.id.measure_Button_start);
+        mResultTV = (TextView) view.findViewById(R.id.measure_TextView_resultText);
+        mSaveButton = (Button) view.findViewById(R.id.measure_Button_save);
 
         /* Change username in greeting text. */
         String username = PreferenceManager.getDefaultSharedPreferences(getActivity())
@@ -96,18 +96,17 @@ public class MeasureFragment extends Fragment {
                 mProgressPieView.setProgress(mProgressPercentage);
                 mProgressPieView.setText(mProgressPercentage + "%");
                 mResultTV.setText("Measuring... Please wait.");
-                if (mProgressPercentage < 100) {
+                if (mProgressPercentage < 100)
                     mHandler.postDelayed(stringupdater, mInterval);
-                } else {
+                else
                     finishMeasuring();
-                }
             }
         };
 
         mPremealModeButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                mJenisPengukuran = 1;
+                mJenisPengukuran = Config.MEASUREMENT_MODE_PREMEAL;
                 prepareForMeasuring(MODE_BUTTON_PREMEAL, view);
                 return true;
             }
@@ -116,7 +115,7 @@ public class MeasureFragment extends Fragment {
         mPostmealModeButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                mJenisPengukuran = 2;
+                mJenisPengukuran = Config.MEASUREMENT_MODE_POSTMEAL;
                 prepareForMeasuring(MODE_BUTTON_POSTMEAL, view);
                 return true;
             }
@@ -125,7 +124,7 @@ public class MeasureFragment extends Fragment {
         mRandomModeButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                mJenisPengukuran = 3;
+                mJenisPengukuran = Config.MEASUREMENT_MODE_RANDOM;
                 prepareForMeasuring(MODE_BUTTON_RANDOM, view);
                 return true;
             }
@@ -146,7 +145,6 @@ public class MeasureFragment extends Fragment {
                 saveToServer();
             }
         });
-
         return view;
     }
 
@@ -200,30 +198,34 @@ public class MeasureFragment extends Fragment {
 
         String resultText;
         int sugarlevel = Config.bloodSugarLevel(getActivity().getApplicationContext(), mJenisPengukuran, mKadar);
+
         resultText = "Your blood sugar level is ";
+        Random r = new Random();
+        int idx;
 
         switch (sugarlevel) {
-            case 0:
-                resultText += "very low";
-                mProgressPieView.setProgressColor(0xFFFF4028);
-                break;
             case 1:
-                resultText += "low";
+                resultText += "low\n";
+                idx = r.nextInt(Config.commentLow.length);
+                resultText += Config.commentLow[idx];
                 mProgressPieView.setProgressColor(0xFFFFBE2C);
                 break;
             case 2:
-                resultText += "normal";
+                resultText += "normal\n";
+                idx = r.nextInt(Config.commentNormal.length);
+                resultText += Config.commentNormal[idx];
                 mProgressPieView.setProgressColor(0xFF9EFF8C);
                 break;
             case 3:
-                resultText += "high";
+                resultText += "high\n";
+                idx = r.nextInt(Config.commentHigh.length);
+                resultText += Config.commentHigh[idx];
                 mProgressPieView.setProgressColor(0xFFFFBE2C);
                 break;
-            case 4:
-                resultText += "very high";
-                mProgressPieView.setProgressColor(0xFFFF4028);
-                break;
         }
+
+        /* Add comment. */
+        resultText += "\n";
 
         mResultTV.setText(resultText);
     }

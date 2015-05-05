@@ -13,5 +13,8 @@
     <string name="graph_premealGraph">Premeal Graph (in mg/dL)</string>
     <string name="graph_postmealGraph">Postmeal Graph (in mg/dL)</string>
     <string name="graph_randomGraph">Random Graph (in mg/dL)</string>
+    <string name="measure_start">START MEASURING</string>
+    <string name="measure_save">SAVE RESULT</string>
+    <string name="measure_again">MEASURE AGAIN</string>
 
 </resources>

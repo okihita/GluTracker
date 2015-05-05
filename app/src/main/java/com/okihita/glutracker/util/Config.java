@@ -22,10 +22,12 @@ public class Config {
     public static final String IS_DIABETES = "isdiabetes";
 
     public static final String MEASUREMENT_ADDITION_ENTRY_POINT = "add.php";
+
     public static final int MEASUREMENT_MODE_PREMEAL = 1;
     public static final int MEASUREMENT_MODE_POSTMEAL = 2;
     public static final int MEASUREMENT_MODE_RANDOM = 3;
 
+/*
     private static final int[] pregnantWith = {50, 59, 60, 99, 100, 130, 80, 99, 100, 129, 130, 180, 50, 79, 80, 120, 121, 160};
     private static final int[] pregnantWithout = {50, 59, 60, 95, 96, 126, 80, 119, 120, 140, 141, 200, 50, 79, 80, 120, 121, 180};
     private static final int[] less6With = {60, 99, 100, 180, 181, 200, 80, 109, 110, 200, 201, 250, 60, 99, 100, 180, 291, 220};
@@ -36,61 +38,44 @@ public class Config {
     private static final int[] from13to19Without = {60, 69, 70, 100, 101, 130, 80, 99, 100, 130, 131, 180, 60, 79, 80, 120, 121, 160};
     private static final int[] from20With = {60, 99, 100, 130, 131, 200, 80, 129, 130, 200, 201, 250, 60, 99, 100, 180, 161, 230};
     private static final int[] from20Without = {60, 69, 70, 100, 101, 130, 80, 99, 100, 140, 141, 200, 60, 79, 80, 120, 121, 180};
+*/
+
+    private static final int[] diabetes = {76, 126, 79, 200, 76, 200};
+    private static final int[] nondiabetes = {75, 100, 75, 140, 75, 140};
+    private static final int[] pregnant = {60, 92, 60, 153, 60, 153};
+
+    public static final String[] commentLow = {"You need to eat.", "Take a rest and eat some food.", "Call your doctor!", "Go to hospital!", "You are in danger!"};
+    public static final String[] commentNormal = {"Great!", "Excellent!", "Keep it up!"};
+    public static final String[] commentHigh = {"Do not eat too much!", "How about taking some exercise.", "Relax, don't be to stressed.", "Please take your insulin and pills!", "Call your doctor!"};
 
 
+    /**
+     * context will receive Activity.getApplicationContext().
+     * measurementMode will receive
+     **/
     public static int bloodSugarLevel(Context context, int measurementMode, int value) {
         boolean isDiabetes = PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(Config.IS_DIABETES, false);
         boolean isPregnant = PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(Config.IS_PREGNANT, false);
-        int ageRange = PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(Config.AGE_RANGE, 1);
 
-        int[] category = null;
-        int sugarlevel = 0;
+        int[] category;
+        int sugarlevel = 1; // by default, sugar level will return 'Low'
 
         /* Selecting category. */
-        if (isPregnant) {
-            category = isDiabetes ? pregnantWith : pregnantWithout;
-        } else {
-            switch (ageRange) {
-                case 1: // less than 6
-                    if (isDiabetes) category = less6With;
-                    else category = less6Without;
-                    break;
-                case 2: // 6 to 12
-                    if (isDiabetes) category = from6to12With;
-                    else category = from6to12Without;
-                    break;
-                case 3: // 13 to 19
-                    if (isDiabetes) category = from13to19With;
-                    else category = from13to19Without;
-                    break;
-                case 4: // 19+
-                    if (isDiabetes) category = from20With;
-                    else category = from20Without;
-                    break;
-            }
-        }
+        if (isPregnant)
+            category = pregnant;
+        else if (isDiabetes)
+            category = diabetes;
+        else
+            category = nondiabetes;
 
         assert category != null;
-        int batasBawahLow = category[6 * (measurementMode - 1)];
-        if (value > batasBawahLow)
-            sugarlevel = 1;
-
-        int batasBawahNormal = category[6 * (measurementMode - 1) + 2];
-        if (value > batasBawahNormal)
+        if (value > category[(2 * (measurementMode - 1))]) // sugar level normal
             sugarlevel = 2;
-
-        int batasBawahHigh = category[6 * (measurementMode - 1) + 4];
-        if (value > batasBawahHigh)
+        if (value > category[(2 * (measurementMode - 1)) + 1]) // sugar level high
             sugarlevel = 3;
 
-        int batasAtasHigh = category[6 * (measurementMode - 1) + 5];
-        if (value > batasAtasHigh)
-            sugarlevel = 4;
-
-        return sugarlevel; // 0 = very low, 1 = low, 2 = normal, 3 = high, 4 = very high
+        return sugarlevel; // 1 = low, 2 = normal, 3 = high
     }
-
 }
