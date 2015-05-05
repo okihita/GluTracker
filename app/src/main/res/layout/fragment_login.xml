@@ -4,8 +4,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="#fff"
         android:layout_height="wrap_content"
+        android:background="#fff"
         android:padding="@dimen/glutracker_narrow_padding">
 
         <ImageView
@@ -25,7 +25,8 @@
             android:gravity="center"
             android:padding="@dimen/glutracker_narrow_padding"
             android:text="@string/app_name"
-            android:textSize="@dimen/abc_text_size_display_1_material"
+            android:textColor="#15b6c9"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -39,14 +40,14 @@
                 android:id="@+id/FLS_EditText_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="email" />
+                android:hint="@string/login_email"
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/FLS_EditText_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="password"
+                android:hint="@string/login_password"
                 android:inputType="textPassword" />
 
             <Button
@@ -54,7 +55,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="LOGIN" />
+                android:textColor="#ffffff"
+                android:background="@drawable/button"
+                android:text="@string/login_Button_login" />
 
         </LinearLayout>
     </RelativeLayout>

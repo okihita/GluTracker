@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -39,9 +40,9 @@ public class MeasureFragment extends Fragment {
     private RequestQueue mRequestQueue;
     private ProgressPieView mProgressPieView;
 
-    private Button mPremealModeButton;
-    private Button mPostmealModeButton;
-    private Button mRandomModeButton;
+    private ImageButton mPremealModeButton;
+    private ImageButton mPostmealModeButton;
+    private ImageButton mRandomModeButton;
     private Button mStartButton;
     private Button mSaveButton;
     private TextView mResultTV;
@@ -67,9 +68,9 @@ public class MeasureFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_measure, container, false);
 
         TextView mGreetingTextView = (TextView) view.findViewById(R.id.measure_TextView_username);
-        mPremealModeButton = (Button) view.findViewById(R.id.measure_Button_premeal);
-        mPostmealModeButton = (Button) view.findViewById(R.id.measure_Button_postmeal);
-        mRandomModeButton = (Button) view.findViewById(R.id.measure_Button_random);
+        mPremealModeButton = (ImageButton) view.findViewById(R.id.measure_Button_premeal);
+        mPostmealModeButton = (ImageButton) view.findViewById(R.id.measure_Button_postmeal);
+        mRandomModeButton = (ImageButton) view.findViewById(R.id.measure_Button_random);
 
         mProgressPieView = (ProgressPieView) view.findViewById(R.id.measure_progressPieView);
         mStartButton = (Button) view.findViewById(R.id.measure_Button_start);
@@ -192,7 +193,7 @@ public class MeasureFragment extends Fragment {
         mStartButton.setEnabled(false);
         mSaveButton.setEnabled(true);
 
-        int levelResult = new Random().nextInt(40) + 80;
+        int levelResult = new Random().nextInt(250) + 50;
         mKadar = levelResult;
         mProgressPieView.setText(String.valueOf(levelResult) + "mg/dL");
 
@@ -208,19 +209,19 @@ public class MeasureFragment extends Fragment {
                 resultText += "low\n";
                 idx = r.nextInt(Config.commentLow.length);
                 resultText += Config.commentLow[idx];
-                mProgressPieView.setProgressColor(0xFFFFBE2C);
+                mProgressPieView.setProgressColor(0xFFFFCA2D);
                 break;
             case 2:
                 resultText += "normal\n";
                 idx = r.nextInt(Config.commentNormal.length);
                 resultText += Config.commentNormal[idx];
-                mProgressPieView.setProgressColor(0xFF9EFF8C);
+                mProgressPieView.setProgressColor(0xFF4EBF63);
                 break;
             case 3:
                 resultText += "high\n";
                 idx = r.nextInt(Config.commentHigh.length);
                 resultText += Config.commentHigh[idx];
-                mProgressPieView.setProgressColor(0xFFFFBE2C);
+                mProgressPieView.setProgressColor(0xFFE52A1B);
                 break;
         }
 
@@ -256,7 +257,7 @@ public class MeasureFragment extends Fragment {
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-                        ft.replace(R.id.fragmentContainer, new LogbookFragment()).commit();
+                        ft.replace(R.id.fragmentContainer, new LogbookFragment()).addToBackStack("logbook").commit();
                     }
                 },
                 new Response.ErrorListener() {

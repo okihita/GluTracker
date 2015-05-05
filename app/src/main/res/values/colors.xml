@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primaryColor">#FFEB38</color>
+    <color name="darkcyan">#119fb0</color>
+    <color name="lightcyan">#15b6c9</color>
 </resources>

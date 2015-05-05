@@ -23,27 +23,36 @@
         android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/measure_Button_premeal"
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="96dp"
             android:layout_weight="1"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/premeal"
             android:text="@string/measure_Button_premeal"
             tools:ignore="ButtonStyle" />
 
-        <Button
+        <ImageButton
             android:id="@+id/measure_Button_postmeal"
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="96dp"
             android:layout_weight="1"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/postmeal"
             android:text="@string/measure_Button_postmeal"
             tools:ignore="ButtonStyle" />
 
-        <Button
+        <ImageButton
             android:id="@+id/measure_Button_random"
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="96dp"
             android:layout_weight="1"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/random"
             android:text="@string/measure_Button_random"
             tools:ignore="ButtonStyle" />
 

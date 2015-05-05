@@ -22,7 +22,8 @@ public class BaseActivity extends ActionBarActivity {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private final String[] mMenuTitles = new String[]{"Measure", "Profile", "Logbook", "How To", "About", "Logout"};
+    private final String[] mMenuTitles =
+            new String[]{"Measure", "Profile", "Logbook", "How To", "About", "Logout"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
