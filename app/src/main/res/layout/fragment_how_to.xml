@@ -1,165 +1,287 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/glutracker_medium_padding">
+    android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cara Penggunaan"
-        android:textColor="@color/material_deep_teal_500"
-        android:textSize="@dimen/abc_text_size_headline_material"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="@dimen/glutracker_medium_padding">
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cara Penggunaan"
+            android:textColor="@color/material_deep_teal_500"
+            android:textSize="@dimen/abc_text_size_headline_material"
+            android:textStyle="bold" />
 
-        <TableRow>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:textStyle="bold"
-                android:layout_column="1"
-                android:text="1." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Aktifkan Bluetooth pada Android Anda." />
-        </TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="1."
+                    android:textStyle="bold" />
 
-        <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Aktifkan Bluetooth pada Android Anda." />
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:layout_column="1"
-                android:textStyle="bold"
-                android:text="2." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Nyalakan Smart Glucometer." />
-        </TableRow>
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_1" />
 
-        <TableRow>
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:textStyle="bold"
-                android:layout_column="1"
-                android:text="3." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Lakukan pairing pada Android Anda dengan memilih nama Smart Glucometer." />
-        </TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="2."
+                    android:textStyle="bold" />
 
-        <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Nyalakan Smart Glucometer." />
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                android:paddingRight="4dp"
-                android:layout_column="1"
-                android:text="4." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Buka aplikasi Smart Glucometer pada ponsel Android Anda dan lakukan login atau signup." />
-        </TableRow>
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_2" />
 
-        <TableRow>
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                android:paddingRight="4dp"
-                android:layout_column="1"
-                android:text="5." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Pada layar Measure, pilih mode pengukuran." />
-        </TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="3."
+                    android:textStyle="bold" />
 
-        <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Lakukan pairing pada Android Anda dengan memilih nama Smart Glucometer." />
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                android:paddingRight="4dp"
-                android:layout_column="1"
-                android:text="6." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Pasang sensor Smart Glucometer pada telinga Anda." />
-        </TableRow>
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_3" />
 
-        <TableRow>
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                android:paddingRight="4dp"
-                android:layout_column="1"
-                android:text="7." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Tekan tombol Start untuk memulai pengukuran." />
-        </TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="4."
+                    android:textStyle="bold" />
 
-        <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Buka aplikasi Smart Glucometer pada\nponsel Android Anda dan lakukan login atau signup." />
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                android:paddingRight="4dp"
-                android:layout_column="1"
-                android:text="8." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Tunggu beberapa saat sampai hasil pengukuran muncul di layar." />
-        </TableRow>
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_4a" />
 
-        <TableRow>
+            </TableRow>
 
-            <TextView
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                android:paddingRight="4dp"
-                android:layout_column="1"
-                android:text="9." />
+            <TableRow>
 
-            <TextView
-                android:layout_column="2"
-                android:layout_width="wrap_content"
-                android:text="Tekan tombol Save untuk menyimpan data pengukuran." />
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="5."
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Pada layar Measure, pilih mode pengukuran." />
+            </TableRow>
+
+            <TableRow>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_4b" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="6."
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Pasang sensor Smart Glucometer pada telinga Anda." />
+            </TableRow>
+
+            <TableRow>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_5" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="7."
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Tekan tombol Start untuk memulai pengukuran." />
+            </TableRow>
+
+            <TableRow>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_6" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="8."
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_column="2"
+                    android:text="Tunggu beberapa saat sampai\nhasil pengukuran muncul di layar." />
+            </TableRow>
+
+            <TableRow>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_7" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_column="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="9."
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_column="2"
+                    android:text="Tekan tombol Save untuk\nmenyimpan data pengukuran." />
+            </TableRow>
+
+            <TableRow>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="360dp"
+                    android:layout_column="2"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/step_8" />
+
+            </TableRow>
+        </TableLayout>
 
 
-    <Button
-        android:id="@+id/FHT_Button_continue"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@color/material_deep_teal_500"
-        android:text="Continue"
-        android:textColor="@color/primary_text_default_material_dark" />
-</LinearLayout>
+        <Button
+            android:id="@+id/FHT_Button_continue"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@color/material_deep_teal_500"
+            android:text="Continue"
+            android:textColor="@color/primary_text_default_material_dark" />
+    </LinearLayout>
+</ScrollView>

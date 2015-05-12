@@ -59,13 +59,13 @@ public class SplashActivity extends ActionBarActivity {
         mFragmentTransaction.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
         switch (item.getItemId()) {
 
-            case R.id.action_login:
+            case R.id.splash_login:
 
                 Fragment loginFragment = new LoginFragment();
                 mFragmentTransaction.replace(R.id.fragmentContainer, loginFragment).commit();
                 return true;
 
-            case R.id.action_signup:
+            case R.id.splash_signup:
                 Fragment signupFragment = new SignupFragment();
                 mFragmentTransaction.replace(R.id.fragmentContainer, signupFragment).commit();
                 return true;

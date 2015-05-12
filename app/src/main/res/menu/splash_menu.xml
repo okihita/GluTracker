@@ -1,14 +1,15 @@
-<menu
+<menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_login"
-        android:title="Login"
+        android:id="@+id/splash_login"
+        android:title="@string/splash_login"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/action_signup"
-        android:title="Signup"
-        app:showAsAction="always"/>
+        android:id="@+id/splash_signup"
+        android:title="@string/splash_signup"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 </menu>

@@ -10,7 +10,7 @@
         android:layout_width="150dp"
         android:src="@drawable/ursula"
         android:layout_height="250dp"
-        android:layout_centerHorizontal="true" />
+        android:contentDescription="@null" />
 
     <TableLayout
         android:layout_marginTop="16dp"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 style="?android:textAppearanceMedium"
                 android:layout_column="2"
-                />
+                android:inputType="textPersonName" />
         </TableRow>
 
         <TableRow>
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 style="?android:textAppearanceMedium"
                 android:layout_column="2"
-                />
+                android:inputType="date" />
         </TableRow>
 
         <TableRow>
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 style="?android:textAppearanceMedium"
                 android:layout_column="2"
-                 />
+                android:inputType="text" />
         </TableRow>
 
         <TableRow>
