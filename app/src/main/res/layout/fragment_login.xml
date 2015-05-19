@@ -5,7 +5,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
         android:padding="@dimen/glutracker_narrow_padding">
 
         <ImageView
@@ -55,9 +54,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="#ffffff"
                 android:background="@drawable/button"
-                android:text="@string/login_Button_login" />
+                android:text="@string/login_Button_login"
+                android:textColor="#ffffff" />
 
         </LinearLayout>
     </RelativeLayout>

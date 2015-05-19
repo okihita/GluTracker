@@ -34,6 +34,11 @@ public class MeasurementItem {
         return mTanggalAmbil;
     }
 
+    /**
+     * 1: PREMEAL<br/>
+     * 2: POSTMEAL<br/>
+     * 3: RANDOM<br/>
+     */
     public int getJenis() {
         return mJenis;
     }

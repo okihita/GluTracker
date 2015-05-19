@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.okihita.glutracker.R;
 import com.okihita.glutracker.ViewBase.LogbookFragment;
+import com.okihita.glutracker.util.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +35,12 @@ public class ItemAdapter extends ArrayAdapter<MeasurementItem> {
 
         String s = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).format(mi.getTanggalAmbil());
         date.setText(s);
+
+        TextView level = (TextView) convertView.findViewById(R.id.measurementItem_TextView_level);
+
+        int sugarlevel = Config.bloodSugarLevel(mLogbookFragment.getActivity().getApplicationContext(), mi.getJenis(), mi.getKadar());
+
+        level.setText(sugarlevel == 1 ? "Low" : sugarlevel == 2 ? "Normal" : "High");
         TextView kadar = (TextView) convertView.findViewById(R.id.measurementItem_TextView_kadar);
         kadar.setText(String.valueOf(mi.getKadar()) + " mg/dL");
         TextView jenis = (TextView) convertView.findViewById(R.id.measurementItem_TextView_jenis);

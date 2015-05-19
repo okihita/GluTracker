@@ -5,7 +5,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
         android:orientation="vertical"
         android:padding="@dimen/glutracker_medium_padding">
 
@@ -113,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    android:text="Ever having diabetes?" />
+                    android:text="@string/signup_ever_having_diabetes" />
 
                 <Switch
                     android:id="@+id/FS_Switch_history"
@@ -163,7 +162,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="By clicking signup you understand and agree with the Smart Glucometer Terms and Use.  " />
+                android:text="@string/signup_terms" />
 
             <Button
                 android:id="@+id/FS_Button_signup"
@@ -171,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="8dp"
-                android:text="SIGN UP" />
+                android:text="@string/signup_signup" />
 
         </LinearLayout>
     </LinearLayout>

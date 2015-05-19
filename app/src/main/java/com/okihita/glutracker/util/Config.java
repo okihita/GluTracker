@@ -50,8 +50,7 @@ public class Config {
 
 
     /**
-     * context will receive Activity.getApplicationContext().
-     * measurementMode will receive
+     * 1 = LOW, 2 = NORMAL, 3 = HIGH
      **/
     public static int bloodSugarLevel(Context context, int measurementMode, int value) {
         boolean isDiabetes = PreferenceManager.getDefaultSharedPreferences(context)

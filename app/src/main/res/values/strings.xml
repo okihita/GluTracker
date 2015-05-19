@@ -19,5 +19,9 @@
     <string name="login_Button_login">LOGIN</string>
     <string name="splash_login">Login</string>
     <string name="splash_signup">Signup</string>
+    <string name="measurement_separator">\u0020-\u0020</string>
+    <string name="signup_terms">By clicking signup you understand and agree with the Smart Glucometer Terms and Use.</string>
+    <string name="signup_signup">SIGN UP</string>
+    <string name="signup_ever_having_diabetes">Ever having diabetes?</string>
 
 </resources>
