@@ -124,7 +124,7 @@ public class GraphFragment extends Fragment {
         JsonArrayRequest measurementRequest = new JsonArrayRequest(
                 graphMeasurementDataQuery,
                 new Response.Listener<JSONArray>() {
-                   @Override
+                    @Override
                     public void onResponse(JSONArray response) {
                         try {
                             mMeasurementItems.clear();

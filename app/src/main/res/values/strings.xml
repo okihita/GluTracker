@@ -23,5 +23,10 @@
     <string name="signup_terms">By clicking signup you understand and agree with the Smart Glucometer Terms and Use.</string>
     <string name="signup_signup">SIGN UP</string>
     <string name="signup_ever_having_diabetes">Ever having diabetes?</string>
+    <string name="manual_input">MANUAL INPUT</string>
+    <string name="input_Button_pre">PRE</string>
+    <string name="input_Button_postmeal">POST</string>
+    <string name="input_Button_random">RAND</string>
+    <string name="input_EditText_hint">insert value in mg/dL</string>
 
 </resources>

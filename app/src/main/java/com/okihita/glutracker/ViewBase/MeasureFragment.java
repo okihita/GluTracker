@@ -33,6 +33,7 @@ import java.util.Random;
 
 public class MeasureFragment extends Fragment {
 
+    private static final int REQUEST_CODE_MANUAL_INPUT = 1;
     private final int MODE_BUTTON_PREMEAL = 1;
     private final int MODE_BUTTON_POSTMEAL = 2;
     private final int MODE_BUTTON_RANDOM = 3;
@@ -44,6 +45,7 @@ public class MeasureFragment extends Fragment {
     private ImageButton mPostmealModeButton;
     private ImageButton mRandomModeButton;
     private Button mStartButton;
+    private Button mManualInput;
     private Button mSaveButton;
     private TextView mResultTV;
 
@@ -74,6 +76,7 @@ public class MeasureFragment extends Fragment {
 
         mProgressPieView = (ProgressPieView) view.findViewById(R.id.measure_progressPieView);
         mStartButton = (Button) view.findViewById(R.id.measure_Button_start);
+        mManualInput = (Button) view.findViewById(R.id.measure_Button_manualInput);
         mResultTV = (TextView) view.findViewById(R.id.measure_TextView_resultText);
         mSaveButton = (Button) view.findViewById(R.id.measure_Button_save);
 
@@ -137,6 +140,15 @@ public class MeasureFragment extends Fragment {
                 mTanggalWaktu = new Date();
                 mProgressPercentage = 0;
                 stringupdater.run();
+            }
+        });
+
+        mManualInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ManualInputFragment f = ManualInputFragment.newInstance();
+                f.setTargetFragment(MeasureFragment.this, REQUEST_CODE_MANUAL_INPUT);
+                f.show(getFragmentManager(), "manual");
             }
         });
 
