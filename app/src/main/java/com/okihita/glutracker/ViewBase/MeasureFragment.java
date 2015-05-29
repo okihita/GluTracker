@@ -1,8 +1,13 @@
 package com.okihita.glutracker.ViewBase;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,10 +32,15 @@ import com.filippudak.ProgressPieView.ProgressPieView;
 import com.okihita.glutracker.R;
 import com.okihita.glutracker.util.Config;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
 
 public class MeasureFragment extends Fragment {
 
@@ -40,24 +51,44 @@ public class MeasureFragment extends Fragment {
 
     private RequestQueue mRequestQueue;
     private ProgressPieView mProgressPieView;
+    private String mDateString;
 
     private ImageButton mPremealModeButton;
     private ImageButton mPostmealModeButton;
     private ImageButton mRandomModeButton;
     private Button mStartButton;
-    private Button mManualInput;
     private Button mSaveButton;
     private TextView mResultTV;
 
     private Runnable stringupdater;
     private final Handler mHandler = new Handler();
-    private final int mInterval = 25;
+    private final int mInterval = 300;
     private int mProgressPercentage;
 
     /* Menentukan kapan merah-hijau-kuning. */
     private int mJenisPengukuran;
     private int mKadar;
     private Date mTanggalWaktu = new Date();
+
+    /* Bluetooth-related variables. */
+    int receivedValue = 0;
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothSocket mmSocket;
+    BluetoothDevice mmDevice;
+    OutputStream mmOutputStream;
+    InputStream mmInputStream;
+    Thread workerThread;
+    byte[] readBuffer;
+    int readBufferPosition;
+    volatile boolean stopWorker;
+
+    /* Function to show only user's first name. */
+    private String getFirstWord(String text) {
+        if (text.indexOf(' ') > -1)  // Check if there is more than one word.
+            return text.substring(0, text.indexOf(' ')); // Extract first word.
+        else
+            return text; // Text is the first word itself
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +107,6 @@ public class MeasureFragment extends Fragment {
 
         mProgressPieView = (ProgressPieView) view.findViewById(R.id.measure_progressPieView);
         mStartButton = (Button) view.findViewById(R.id.measure_Button_start);
-        mManualInput = (Button) view.findViewById(R.id.measure_Button_manualInput);
         mResultTV = (TextView) view.findViewById(R.id.measure_TextView_resultText);
         mSaveButton = (Button) view.findViewById(R.id.measure_Button_save);
 
@@ -93,6 +123,7 @@ public class MeasureFragment extends Fragment {
         mProgressPieView.setStrokeColor(0xFFDDDDDD);
         mProgressPieView.setStrokeWidth(1);
 
+        // Update pie animation.
         stringupdater = new Runnable() {
             @Override
             public void run() {
@@ -101,6 +132,8 @@ public class MeasureFragment extends Fragment {
                 mProgressPieView.setText(mProgressPercentage + "%");
                 mResultTV.setText("Measuring... Please wait.");
                 if (mProgressPercentage < 100)
+
+                    // Every mInterval, add the percentage by 1.
                     mHandler.postDelayed(stringupdater, mInterval);
                 else
                     finishMeasuring();
@@ -140,10 +173,15 @@ public class MeasureFragment extends Fragment {
                 mTanggalWaktu = new Date();
                 mProgressPercentage = 0;
                 stringupdater.run();
+                try {
+                    findBT();
+                    openBT();
+                } catch (IOException ignored) {
+                }
             }
         });
 
-        mManualInput.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.measure_Button_manualInput).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ManualInputFragment f = ManualInputFragment.newInstance();
@@ -155,7 +193,8 @@ public class MeasureFragment extends Fragment {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveToServer();
+                mDateString = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).format(mTanggalWaktu);
+                saveResultToServer();
             }
         });
         return view;
@@ -205,14 +244,13 @@ public class MeasureFragment extends Fragment {
         mStartButton.setEnabled(false);
         mSaveButton.setEnabled(true);
 
-        int levelResult = new Random().nextInt(250) + 50;
-        mKadar = levelResult;
-        mProgressPieView.setText(String.valueOf(levelResult) + "mg/dL");
+        // int levelResult = new Random().nextInt(250) + 50;
+        mKadar = receivedValue;
+        mProgressPieView.setText(String.valueOf(receivedValue) + "mg/dL");
 
-        String resultText;
+        String resultText = "Your blood sugar level is ";
         int sugarlevel = Config.bloodSugarLevel(getActivity().getApplicationContext(), mJenisPengukuran, mKadar);
 
-        resultText = "Your blood sugar level is ";
         Random r = new Random();
         int idx;
 
@@ -237,25 +275,26 @@ public class MeasureFragment extends Fragment {
                 break;
         }
 
-        /* Add comment. */
+        /* Add comment to result text. */
         resultText += "\n";
-
         mResultTV.setText(resultText);
     }
 
-    private void saveToServer() {
-        String sDate = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("id", "ID"))).format(mTanggalWaktu);
+    private void saveResultToServer() {
+
+        Log.d(Config.TAG, "Save result to server called!");
 
         /* Building request query. */
         Uri.Builder mBaseUriBuilder = (new Uri.Builder()).scheme("http")
                 .authority(Config.BASE_URL)
                 .appendPath(Config.SUBDOMAIN_ADDRESS)
                 .appendPath(Config.MEASUREMENT_ADDITION_ENTRY_POINT)
-                .appendQueryParameter("date", sDate)
+                .appendQueryParameter("date", mDateString)
                 .appendQueryParameter("kadar", String.valueOf(mKadar))
                 .appendQueryParameter("jenis", String.valueOf(mJenisPengukuran));
         String saveResultItemQuery = mBaseUriBuilder.build().toString();
-        Log.d(Config.TAG, saveResultItemQuery);
+
+        Log.d(Config.TAG, "Query was:" + saveResultItemQuery);
 
         /* Sending request. */
         StringRequest saveResultItemRequest = new StringRequest(
@@ -263,8 +302,6 @@ public class MeasureFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(Config.TAG, "OK");
-
                         /* Change fragment content here. */
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
@@ -275,7 +312,6 @@ public class MeasureFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d(Config.TAG, "FAIL: " + error.toString());
                     }
                 }
         );
@@ -283,17 +319,114 @@ public class MeasureFragment extends Fragment {
         mRequestQueue.add(saveResultItemRequest);
     }
 
-    /* To show only user's first name. */
-    private String getFirstWord(String text) {
-        if (text.indexOf(' ') > -1)  // Check if there is more than one word.
-            return text.substring(0, text.indexOf(' ')); // Extract first word.
-        else
-            return text; // Text is the first word itself
+    /* Bluetooth commands. 1/3: FIND. */
+    void findBT() {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            // myLabel.setText("No bluetooth adapter available");
+        }
+
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBluetooth, 0);
+        }
+
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice device : pairedDevices) {
+                if (device.getName().equals("HC-05")) {
+                    mmDevice = device;
+                    break;
+                }
+            }
+        }
+        // myLabel.setText("Bluetooth Device Found");
     }
+
+    /* Bluetooth commands. 2/3: OPEN. */
+    void openBT() throws IOException {
+        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //Standard SerialPortService ID
+        mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
+        mmSocket.connect();
+        mmOutputStream = mmSocket.getOutputStream();
+        mmInputStream = mmSocket.getInputStream();
+
+        beginListenForData();
+        // myLabel.setText("Bluetooth Opened");
+    }
+
+    /* Bluetooth commands. 3/3: LISTEN. */
+    void beginListenForData() {
+        final Handler handler = new Handler();
+        final byte delimiter = 10; //This is the ASCII code for a newline character
+
+        stopWorker = false;
+        readBufferPosition = 0;
+        readBuffer = new byte[1024];
+        workerThread = new Thread(new Runnable() {
+            public void run() {
+                while (!Thread.currentThread().isInterrupted() && !stopWorker) {
+                    try {
+                        int bytesAvailable = mmInputStream.available();
+                        if (bytesAvailable > 0) {
+                            byte[] packetBytes = new byte[bytesAvailable];
+                            mmInputStream.read(packetBytes);
+                            for (int i = 0; i < bytesAvailable; i++) {
+                                byte b = packetBytes[i];
+                                if (b == delimiter) {
+                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
+                                    final String data = new String(encodedBytes, "US-ASCII");
+                                    readBufferPosition = 0;
+
+                                    handler.post(new Runnable() {
+                                        public void run() {
+                                            // myLabel.setText(data);
+                                            receivedValue = Integer.valueOf(data);
+                                        }
+                                    });
+                                } else {
+                                    readBuffer[readBufferPosition++] = b;
+                                }
+                            }
+                        }
+                    } catch (IOException ex) {
+                        stopWorker = true;
+                    }
+                }
+            }
+        });
+
+        workerThread.start();
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
         ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Measure");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            Toast.makeText(getActivity(), "Measurement saved!", Toast.LENGTH_SHORT).show();
+            Log.d(Config.TAG, "Activity result called!");
+
+            // Setup yang mau disimpan.
+            mKadar = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(Config.MANUAL_INPUT_VALUE, 0);
+            mJenisPengukuran = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(Config.MANUAL_INPUT_TYPE, 0);
+            String year = String.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(Config.MANUAL_INPUT_YEAR, 0));
+            String month = String.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(Config.MANUAL_INPUT_MONTH, 0));
+            String date = String.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(Config.MANUAL_INPUT_DAY, 0));
+            String hour = String.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(Config.MANUAL_INPUT_HOUR, 0));
+            String minute = String.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(Config.MANUAL_INPUT_MINUTE, 0));
+            mDateString = year + "-" + month + "-" + date + " " + hour + ":" + minute + ":00";
+
+            // Panggil save to server
+            saveResultToServer();
+
+        }
     }
 }

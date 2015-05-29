@@ -27,19 +27,6 @@ public class Config {
     public static final int MEASUREMENT_MODE_POSTMEAL = 2;
     public static final int MEASUREMENT_MODE_RANDOM = 3;
 
-/*
-    private static final int[] pregnantWith = {50, 59, 60, 99, 100, 130, 80, 99, 100, 129, 130, 180, 50, 79, 80, 120, 121, 160};
-    private static final int[] pregnantWithout = {50, 59, 60, 95, 96, 126, 80, 119, 120, 140, 141, 200, 50, 79, 80, 120, 121, 180};
-    private static final int[] less6With = {60, 99, 100, 180, 181, 200, 80, 109, 110, 200, 201, 250, 60, 99, 100, 180, 291, 220};
-    private static final int[] less6Without = {60, 69, 70, 100, 101, 130, 80, 99, 100, 170, 171, 220, 60, 79, 80, 150, 151, 200};
-    private static final int[] from6to12With = {60, 89, 90, 180, 181, 200, 80, 99, 100, 180, 181, 220, 60, 89, 90, 180, 181, 200};
-    private static final int[] from6to12Without = {60, 69, 70, 100, 101, 130, 80, 89, 90, 150, 151, 200, 60, 79, 80, 140, 141, 180};
-    private static final int[] from13to19With = {60, 89, 90, 130, 131, 200, 80, 89, 90, 150, 151, 200, 60, 99, 100, 140, 141, 180};
-    private static final int[] from13to19Without = {60, 69, 70, 100, 101, 130, 80, 99, 100, 130, 131, 180, 60, 79, 80, 120, 121, 160};
-    private static final int[] from20With = {60, 99, 100, 130, 131, 200, 80, 129, 130, 200, 201, 250, 60, 99, 100, 180, 161, 230};
-    private static final int[] from20Without = {60, 69, 70, 100, 101, 130, 80, 99, 100, 140, 141, 200, 60, 79, 80, 120, 121, 180};
-*/
-
     private static final int[] diabetes = {76, 126, 79, 200, 76, 200};
     private static final int[] nondiabetes = {75, 100, 75, 140, 75, 140};
     private static final int[] pregnant = {60, 92, 60, 153, 60, 153};
@@ -47,6 +34,15 @@ public class Config {
     public static final String[] commentLow = {"You need to eat.", "Take a rest and eat some food.", "Call your doctor!", "Go to hospital!", "You are in danger!"};
     public static final String[] commentNormal = {"Great!", "Excellent!", "Keep it up!"};
     public static final String[] commentHigh = {"Do not eat too much!", "How about taking some exercise.", "Relax, don't be to stressed.", "Please take your insulin and pills!", "Call your doctor!"};
+
+    // For manual input temporary storage.
+    public static final String MANUAL_INPUT_YEAR = "com.okihita.manualyear";
+    public static final String MANUAL_INPUT_MONTH = "com.okihita.manualmonth";
+    public static final String MANUAL_INPUT_DAY = "com.okihita.manualday";
+    public static final String MANUAL_INPUT_HOUR = "com.okihita.manualhour";
+    public static final String MANUAL_INPUT_MINUTE = "com.okihita.manualminute";
+    public static final String MANUAL_INPUT_TYPE = "com.okihita.manualtype";
+    public static final String MANUAL_INPUT_VALUE = "com.okihita.manualvalue";
 
 
     /**

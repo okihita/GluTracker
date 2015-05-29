@@ -4,8 +4,12 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.widget.TimePicker;
+
+import com.okihita.glutracker.util.Config;
 
 import java.util.Calendar;
 
@@ -26,5 +30,16 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
+        Log.d(Config.TAG, "" + hourOfDay + " " + minute);
+
+        PreferenceManager.getDefaultSharedPreferences(
+                getActivity().getApplicationContext()).edit()
+                .putInt(Config.MANUAL_INPUT_HOUR, hourOfDay).commit();
+
+        PreferenceManager.getDefaultSharedPreferences(
+                getActivity().getApplicationContext()).edit()
+                .putInt(Config.MANUAL_INPUT_MINUTE, minute).commit();
+
+        ManualInputFragment.timePickerButton.setText(hourOfDay + ":" + minute);
     }
 }
