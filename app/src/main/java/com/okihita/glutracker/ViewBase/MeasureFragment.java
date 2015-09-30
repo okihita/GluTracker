@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -62,7 +63,7 @@ public class MeasureFragment extends Fragment {
 
     private Runnable stringupdater;
     private final Handler mHandler = new Handler();
-    private final int mInterval = 300;
+    private final int mInterval = 100;
     private int mProgressPercentage;
 
     /* Menentukan kapan merah-hijau-kuning. */
@@ -322,10 +323,12 @@ public class MeasureFragment extends Fragment {
     /* Bluetooth commands. 1/3: FIND. */
     void findBT() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        /*
         if (mBluetoothAdapter == null) {
-            // myLabel.setText("No bluetooth adapter available");
+            myLabel.setText("No bluetooth adapter available");
         }
-
+        */
+        assert mBluetoothAdapter != null;
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetooth, 0);
@@ -334,7 +337,7 @@ public class MeasureFragment extends Fragment {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                if (device.getName().equals("HC-05")) {
+                if (device.getName().equals("Glucometer")) {
                     mmDevice = device;
                     break;
                 }
@@ -370,6 +373,7 @@ public class MeasureFragment extends Fragment {
                         int bytesAvailable = mmInputStream.available();
                         if (bytesAvailable > 0) {
                             byte[] packetBytes = new byte[bytesAvailable];
+                            //noinspection ResultOfMethodCallIgnored
                             mmInputStream.read(packetBytes);
                             for (int i = 0; i < bytesAvailable; i++) {
                                 byte b = packetBytes[i];
@@ -404,7 +408,8 @@ public class MeasureFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Measure");
+        //noinspection ConstantConditions
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Measure");
     }
 
     @Override
